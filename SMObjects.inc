@@ -1,8 +1,8 @@
 /** Double-include prevention */
-#if defined _hl_challenge_included
+#if defined SMObjects_included
   #endinput
 #endif
-#define _hl_challenge_included
+#define SMObjects_included
 
 native int GetObjectInt(Handle obj, char[] key);
 
