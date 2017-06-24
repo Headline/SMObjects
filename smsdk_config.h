@@ -1,6 +1,9 @@
 #ifndef _INCLUDE_SM_EXT_CONFIG_HEADER
 #define _INCLUDE_SM_EXT_CONFIG_HEADER
 
+#define SMEXT_CONF_NAME			"SM Objects"
+#define SMEXT_CONF_DESCRIPTION	"Psuedo-Objects in SourcePawn"
+#define SMEXT_CONF_VERSION		"1.0.0.0"
 #define SMEXT_CONF_AUTHOR		"Headline"
 #define SMEXT_CONF_URL			"http://www.michaelwflaherty.com/"
 #define SMEXT_CONF_LOGTAG		"HEADLINE"

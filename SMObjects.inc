@@ -4,13 +4,21 @@
 #endif
 #define _hl_challenge_included
 
+native int GetObjectInt(Handle obj, char[] key);
 
+native bool SetObjectInt(Handle obj, char[] key, int value);
 
+native float GetObjectFloat(Handle obj, char[] key);
 
+native bool SetObjectFloat(Handle obj, char[] key, float value);
 
+native bool GetObjectBool(Handle obj, char[] key);
 
+native bool SetObjectBool(Handle obj, char[] key, bool value);
 
+native bool GetObjectString(Handle obj, char[] key, char[] buffer, int maxsize);
 
+native bool SetObjectString(Handle obj, char[] key, char[] value);
 
 native Handle CreateObject();
 
