@@ -22,6 +22,53 @@ native bool SetObjectString(Handle obj, char[] key, char[] value);
 
 native Handle CreateObject();
 
+methodmap Object < Handle
+{
+	public Object()
+	{
+		return view_as<Object>(CreateObject());
+	}
+	
+	public int GetInt(char[] key)
+	{
+		return GetObjectInt(this, key);
+	}
+	
+	public bool SetInt(char[] key, int value)
+	{
+		return SetObjectInt(this, key, value);
+	}
+	
+	public bool GetBool(char[] key)
+	{
+		return GetObjectBool(this, key);
+	}
+	
+	public bool SetBool(char[] key, bool value)
+	{
+		return SetObjectBool(this, key, value);
+	}
+
+	public float GetFloat(char[] key)
+	{
+		return GetObjectFloat(this, key);
+	}
+	
+	public bool SetFloat(char[] key, float value)
+	{
+		return SetObjectFloat(this, key, value);
+	}
+	
+	public bool GetString(char[] key, char[] buffer, int length)
+	{
+		return GetObjectString(this, key, buffer, length);
+	}
+	
+	public bool SetString(char[] key, char[] value)
+	{
+		return SetObjectString(this, key, value);
+	}
+};
 
 public Extension __ext_objects = 
 {

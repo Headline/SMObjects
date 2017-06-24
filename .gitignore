@@ -3,3 +3,6 @@ build/
 .vs/
 obj-windows-AMD64/
 Extension/
+
+# SOURCEMOD STUFF
+*.smx

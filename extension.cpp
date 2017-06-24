@@ -307,6 +307,10 @@ const sp_nativeinfo_t MyNatives[] =
 	{"GetObjectInt",	GetInt},
 	{"SetObjectBool",	SetBool},
 	{"GetObjectBool",	GetBool},
+	{"SetObjectFloat",	SetFloat},
+	{"GetObjectFloat",	GetFloat},
+	{"GetObjectString",	GetString},
+	{"SetObjectString",	SetString},
 	{NULL,			NULL},
 };
 

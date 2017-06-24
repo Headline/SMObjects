@@ -10,24 +10,24 @@ bool Object::SetBool(std::string std, bool value)
 {
 	if (m.count(std) == 0) // doesn't exist create
 	{
-		T str;
-		str.b = value;
-		str.type_index = 0;
+		T* str = new T;
+		str->b = value;
+		str->type_index = 0;
 
-		m.insert(std::pair<std::string, T>(std, str));
+		m.insert(std::pair<std::string, T*>(std, str));
 		return true;
 	}
 	else // does exist set
 	{
-		T Tvalue = m.find(std)->second;
+		T* Tvalue = m.find(std)->second;
 
-		if (Tvalue.type_index != 0)
+		if (Tvalue->type_index != 0)
 		{
 			return false;
 		}
 		else
 		{
-			Tvalue.b = value;
+			Tvalue->b = value;
 			return true;
 		}
 	}
@@ -35,40 +35,40 @@ bool Object::SetBool(std::string std, bool value)
 
 bool Object::GetBool(std::string std, bool &didFail)
 {
-	T value = m.find(std)->second;
+	T* value = m.find(std)->second;
 
-	if (value.type_index != 0)
+	if (value->type_index != 0)
 	{
 		didFail = true;
 		return false;
 	}
 	
 	didFail = false;
-	return value.b;
+	return value->b;
 }
 
 bool Object::SetInt(std::string std, int value)
 {
 	if (m.count(std) == 0) // doesn't exist create
 	{
-		T str;
-		str.i = value;
-		str.type_index = 1;
+		T* str = new T;
+		str->i = value;
+		str->type_index = 1;
 
-		m.insert(std::pair<std::string, T>(std, str));
+		m.insert(std::pair<std::string, T*>(std, str));
 		return true;
 	}
 	else // does exist set
 	{
-		T Tvalue = m.find(std)->second;
+		T* Tvalue = m.find(std)->second;
 
-		if (Tvalue.type_index != 1)
+		if (Tvalue->type_index != 1)
 		{
 			return false;
 		}
 		else
 		{
-			Tvalue.i = value;
+			Tvalue->i = value;
 			return true;
 		}
 	}
@@ -76,16 +76,16 @@ bool Object::SetInt(std::string std, int value)
 
 int Object::GetInt(std::string std, bool &didFail)
 {
-	T value = m.find(std)->second;
+	T* value = m.find(std)->second;
 
-	if (value.type_index != 1)
+	if (value->type_index != 1)
 	{
 		didFail = true;
 		return -1;
 	}
 	
 	didFail = false;
-	return value.i;
+	return value->i;
 }
 
 
@@ -93,24 +93,26 @@ bool Object::SetString(std::string std, char* value)
 {
 	if (m.count(std) == 0) // doesn't exist create
 	{
-		T str;
-		str.p = value;
-		str.type_index = 2;
+		T* str = new T;
+		str->p = (char*) malloc(strlen(value) + 1);
+		str->type_index = 2;
 
-		m.insert(std::pair<std::string, T>(std, str));
+		strcpy(str->p, value);
+		
+		m.insert(std::pair<std::string, T*>(std, str));
 		return true;
 	}
 	else // does exist set
 	{
-		T Tvalue = m.find(std)->second;
+		T* Tvalue = m.find(std)->second;
 
-		if (Tvalue.type_index != 2)
+		if (Tvalue->type_index != 2)
 		{
 			return false;
 		}
 		else
 		{
-			Tvalue.p = value;
+			Tvalue->p = value;
 			return true;
 		}
 	}
@@ -118,40 +120,40 @@ bool Object::SetString(std::string std, char* value)
 
 char* Object::GetString(std::string std, bool &didFail)
 {
-	T value = m.find(std)->second;
+	T* value = m.find(std)->second;
 
-	if (value.type_index != 2)
+	if (value->type_index != 2)
 	{
 		didFail = true;
 		return "";
 	}
 	
 	didFail = false;
-	return value.p;
+	return value->p;
 }
 
 bool Object::SetFloat(std::string std, float value)
 {
 	if (m.count(std) == 0) // doesn't exist create
 	{
-		T str;
-		str.f = value;
-		str.type_index = 3;
+		T* str = new T;
+		str->f = value;
+		str->type_index = 3;
 
-		m.insert(std::pair<std::string, T>(std, str));
+		m.insert(std::pair<std::string, T*>(std, str));
 		return true;
 	}
 	else // does exist set
 	{
-		T Tvalue = m.find(std)->second;
+		T* Tvalue = m.find(std)->second;
 
-		if (Tvalue.type_index != 3)
+		if (Tvalue->type_index != 3)
 		{
 			return false;
 		}
 		else
 		{
-			Tvalue.f = value;
+			Tvalue->f = value;
 			return true;
 		}
 	}
@@ -159,15 +161,23 @@ bool Object::SetFloat(std::string std, float value)
 
 float Object::GetFloat(std::string std, bool &didFail)
 {
-	T value = m.find(std)->second;
+	T* value = m.find(std)->second;
 
-	if (value.type_index != 3)
+	if (value->type_index != 3)
 	{
 		didFail = true;
 		return -1.0;
 	}
 	
 	didFail = false;
-	return value.f;
+	return value->f;
 }
 
+Object::~Object()
+{
+	
+	for (std::map<std::string, T*>::iterator it = m.begin(); it != m.end(); ++it)
+	{
+		delete it->second;
+	}
+}

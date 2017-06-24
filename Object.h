@@ -8,10 +8,18 @@ struct T
 {
 	int type_index;
 	union { bool b; int i; char* p; float f;};
+	
+	~T()
+	{
+		if (type_index == 2)
+		{
+			free(p);
+		}
+	}
 };
 
-typedef std::map<std::string, T> ObjectMap;
-typedef std::pair<std::string, T> Pair;
+typedef std::map<std::string, T*> ObjectMap;
+typedef std::pair<std::string, T*> Pair;
 
 class Object
 {
@@ -30,4 +38,6 @@ public:
 	
 	bool SetFloat(std::string, float);
 	float GetFloat(std::string, bool&);
+	
+	~Object();
 };
