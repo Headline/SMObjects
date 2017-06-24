@@ -8,15 +8,5 @@ public void OnPluginStart()
 public Action Command_Test(int client, int args)
 {
 	Handle handle = CreateObject();
-	if (handle == null)
-	{
-		PrintToServer("NULL");
-	}
-	else
-	{
-		PrintToServer("VALUE IS %i", handle);
-	}
-	SetObjectInt(handle, "index", 32323232);
-	PrintToServer("CLinet Index: %i", GetObjectInt(handle, "index"));
-	//delete handle;
+	SetObjectInt(handle, "something", 32);
 }
