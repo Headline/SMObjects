@@ -1,17 +1,21 @@
-#include <stdio.h>
-#include <tchar.h>
 #include <map>
-#include <string>
-#include <iostream>
+
+enum UnionType
+{
+	boolean,
+	integer,
+	pChar,
+	floatingPoint
+};
 
 struct T
 {
-	int type_index;
+	UnionType type;
 	union { bool b; int i; char* p; float f;};
 	
 	~T()
 	{
-		if (type_index == 2)
+		if (type == pChar)
 		{
 			free(p);
 		}
@@ -19,7 +23,6 @@ struct T
 };
 
 typedef std::map<std::string, T*> ObjectMap;
-typedef std::pair<std::string, T*> Pair;
 
 class Object
 {

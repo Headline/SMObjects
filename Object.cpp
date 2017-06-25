@@ -1,27 +1,21 @@
 #include "Object.h"
 
-#include <stdio.h>
-#include <tchar.h>
-#include <map>
-#include <string>
-#include <iostream>
-
 bool Object::SetBool(std::string std, bool value)
 {
 	if (m.count(std) == 0) // doesn't exist create
 	{
 		T* str = new T;
 		str->b = value;
-		str->type_index = 0;
+		str->type = boolean;
 
-		m.insert(std::pair<std::string, T*>(std, str));
+		m.insert(std::make_pair(std, str));
 		return true;
 	}
 	else // does exist set
 	{
 		T* Tvalue = m.find(std)->second;
 
-		if (Tvalue->type_index != 0)
+		if (Tvalue->type != boolean)
 		{
 			return false;
 		}
@@ -37,7 +31,7 @@ bool Object::GetBool(std::string std, bool &didFail)
 {
 	T* value = m.find(std)->second;
 
-	if (value->type_index != 0)
+	if (value->type != boolean)
 	{
 		didFail = true;
 		return false;
@@ -53,16 +47,16 @@ bool Object::SetInt(std::string std, int value)
 	{
 		T* str = new T;
 		str->i = value;
-		str->type_index = 1;
+		str->type = integer;
 
-		m.insert(std::pair<std::string, T*>(std, str));
+		m.insert(std::make_pair(std, str));
 		return true;
 	}
 	else // does exist set
 	{
 		T* Tvalue = m.find(std)->second;
 
-		if (Tvalue->type_index != 1)
+		if (Tvalue->type != integer)
 		{
 			return false;
 		}
@@ -78,7 +72,7 @@ int Object::GetInt(std::string std, bool &didFail)
 {
 	T* value = m.find(std)->second;
 
-	if (value->type_index != 1)
+	if (value->type != integer)
 	{
 		didFail = true;
 		return -1;
@@ -94,19 +88,18 @@ bool Object::SetString(std::string std, char* value)
 	if (m.count(std) == 0) // doesn't exist create
 	{
 		T* str = new T;
-		str->p = (char*) malloc(strlen(value) + 1);
-		str->type_index = 2;
-
-		strcpy(str->p, value);
+		str->type = pChar;
 		
-		m.insert(std::pair<std::string, T*>(std, str));
+		str->p = strdup(value);
+		
+		m.insert(std::make_pair(std, str));
 		return true;
 	}
 	else // does exist set
 	{
 		T* Tvalue = m.find(std)->second;
 
-		if (Tvalue->type_index != 2)
+		if (Tvalue->type != pChar)
 		{
 			return false;
 		}
@@ -122,7 +115,7 @@ char* Object::GetString(std::string std, bool &didFail)
 {
 	T* value = m.find(std)->second;
 
-	if (value->type_index != 2)
+	if (value->type != pChar)
 	{
 		didFail = true;
 		return "";
@@ -138,16 +131,16 @@ bool Object::SetFloat(std::string std, float value)
 	{
 		T* str = new T;
 		str->f = value;
-		str->type_index = 3;
+		str->type = floatingPoint;
 
-		m.insert(std::pair<std::string, T*>(std, str));
+		m.insert(std::make_pair(std, str));
 		return true;
 	}
 	else // does exist set
 	{
 		T* Tvalue = m.find(std)->second;
 
-		if (Tvalue->type_index != 3)
+		if (Tvalue->type != floatingPoint)
 		{
 			return false;
 		}
@@ -163,7 +156,7 @@ float Object::GetFloat(std::string std, bool &didFail)
 {
 	T* value = m.find(std)->second;
 
-	if (value->type_index != 3)
+	if (value->type != floatingPoint)
 	{
 		didFail = true;
 		return -1.0;
@@ -176,7 +169,7 @@ float Object::GetFloat(std::string std, bool &didFail)
 Object::~Object()
 {
 	
-	for (std::map<std::string, T*>::iterator it = m.begin(); it != m.end(); ++it)
+	for (ObjectMap::iterator it = m.begin(); it != m.end(); ++it)
 	{
 		delete it->second;
 	}
