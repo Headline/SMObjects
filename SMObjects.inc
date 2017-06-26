@@ -8,6 +8,16 @@ native int GetObjectInt(Handle obj, char[] key);
 
 native bool SetObjectInt(Handle obj, char[] key, int value);
 
+stock any GetObjectCell(Handle obj, char[] key)
+{
+	return view_as<any>(GetObjectInt(obj, key));
+}
+
+stock bool SetObjectCell(Handle obj, char[] key, any value)
+{
+	return SetObjectInt(obj, key, view_as<int>(value));
+}
+
 native float GetObjectFloat(Handle obj, char[] key);
 
 native bool SetObjectFloat(Handle obj, char[] key, float value);
