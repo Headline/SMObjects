@@ -55,6 +55,16 @@ methodmap Object < Handle
 		return SetObjectInt(this, key, value);
 	}
 	
+	public any GetCell(char[] key)
+	{
+		return GetObjectCell(this, key);
+	}
+	
+	public bool SetCell(char[] key, any value)
+	{
+		return SetObjectCell(this, key, value);
+	}
+	
 	public bool GetBool(char[] key)
 	{
 		return GetObjectBool(this, key);
