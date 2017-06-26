@@ -167,6 +167,56 @@ float Object::GetFloat(std::string std, bool &didFail)
 	return value->f;
 }
 
+bool Object::SetArray(std::string std, cell_t* value, size_t size)
+{
+	if (m.count(std) == 0) // doesn't exist create
+	{
+		T* str = new T;
+		str->type = cellArray;
+		
+		str->array = new CellArray;
+		str->array->c = (cell_t*) malloc(sizeof(cell_t) * size);
+		memcpy(str->array->c, value, sizeof(cell_t) * size);
+		str->array->size = size;
+		
+		m.insert(std::make_pair(std, str));
+		return true;
+	}
+	else // does exist set
+	{
+		T* str = m.find(std)->second;
+
+		if (str->type != cellArray)
+		{
+			return false;
+		}
+		else
+		{
+			free(str->array->c);
+			
+			str->array->c = (cell_t*) malloc(sizeof(cell_t) * size);
+			memcpy(str->array->c, value, sizeof(cell_t) * size);
+			str->array->size = size;
+			
+			return true;
+		}
+	}
+}
+
+CellArray* Object::GetArray(std::string std, bool &didFail)
+{
+	T* value = m.find(std)->second;
+
+	if (value->type != cellArray)
+	{
+		didFail = true;
+		return NULL;
+	}
+	
+	didFail = false;
+	return value->array;
+}
+
 Object::~Object()
 {
 	

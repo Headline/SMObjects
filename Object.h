@@ -1,23 +1,40 @@
 #include <map>
+#include "smsdk_ext.h"
 
 enum UnionType
 {
 	boolean,
 	integer,
 	pChar,
-	floatingPoint
+	floatingPoint,
+	cellArray
+};
+
+struct CellArray
+{
+	cell_t* c;
+	size_t size;
+	
+	~CellArray()
+	{
+		free(c);
+	}
 };
 
 struct T
 {
 	UnionType type;
-	union { bool b; int i; char* p; float f;};
+	union { bool b; int i; char* p; float f; CellArray* array;};
 	
 	~T()
 	{
 		if (type == pChar)
 		{
 			free(p);
+		}
+		else if (type == cellArray)
+		{
+			delete array;
 		}
 	}
 };
@@ -42,5 +59,8 @@ public:
 	bool SetFloat(std::string, float);
 	float GetFloat(std::string, bool&);
 	
+	bool SetArray(std::string, cell_t*, size_t);
+	CellArray* GetArray(std::string, bool&);
+
 	~Object();
 };

@@ -20,6 +20,12 @@ native bool GetObjectString(Handle obj, char[] key, char[] buffer, int maxsize);
 
 native bool SetObjectString(Handle obj, char[] key, char[] value);
 
+native bool GetObjectArray(Handle obj, char[] key, any[] buffer, int maxsize);
+
+native bool SetObjectArray(Handle obj, char[] key, any[] buffer, int maxsize);
+
+native int GetObjectArraySize(Handle obj, char[] key);
+
 native Handle CreateObject();
 
 methodmap Object < Handle
@@ -67,6 +73,21 @@ methodmap Object < Handle
 	public bool SetString(char[] key, char[] value)
 	{
 		return SetObjectString(this, key, value);
+	}
+	
+	public bool GetArray(char[] key, any[] buffer, int length)
+	{
+		return GetObjectArray(this, key, buffer, length);
+	}
+	
+	public bool SetArray(char[] key, any[] buffer, int length)
+	{
+		return SetObjectArray(this, key, buffer, length);
+	}
+	
+	public int GetArraySize(char[] key)
+	{
+		return GetObjectArraySize(this, key);
 	}
 };
 

@@ -19,6 +19,8 @@ public Action Command_Write(int client, int args)
 	
 	obj.SetString("teststring", "Test");
 	
+	int testArray[] = {1, 2, 3, 4, 5};
+	obj.SetArray("testarray", testArray, sizeof(testArray));
 }
 
 public Action Command_Read(int client, int args)
@@ -34,8 +36,18 @@ public Action Command_Read(int client, int args)
 	somefloat = obj.GetFloat("somefloat");
 	obj.GetString("teststring", teststring, sizeof(teststring));
 	
+	int arraySize = obj.GetArraySize("testarray");
+	int[] testArray = new int[arraySize];
+	obj.GetArray("testarray", testArray, arraySize);
+
 	PrintToServer("Index: %i | Timestamp: %i | Server exec %i", index, timestamp, server_exec);
 	PrintToServer("Some float: %.2f | Teststring: %s", somefloat, teststring);
 	
+	PrintToServer("size of testarray should be 5. It is: %i", arraySize);
+
+	for (int i = 0; i < arraySize; i++)
+	{
+		PrintToServer("Should be %i: %i", i+1, testArray[i]);
+	}
 	delete obj;
 }

@@ -280,6 +280,112 @@ cell_t GetFloat(IPluginContext *pContext, const cell_t *params)
 	}
 }
 
+cell_t SetArray(IPluginContext *pContext, const cell_t *params) // handle, key, array, size
+{
+	Handle_t hndl = static_cast<Handle_t>(params[1]);
+	HandleError err;
+	HandleSecurity sec;
+ 
+	sec.pOwner = NULL;
+	sec.pIdentity = myself->GetIdentity();
+ 
+
+	Object* obj;
+	if ((err = g_pHandleSys->ReadHandle(hndl, g_ObjectType, &sec, (void **)&obj)) != HandleError_None)
+	{
+		return pContext->ThrowNativeError("Invalid object handle %x (error %d)", hndl, err);
+	}
+ 
+	char* key;
+	pContext->LocalToString(params[2], &key);
+ 
+	cell_t* value;
+	pContext->LocalToPhysAddr(params[3], &value);
+	
+	size_t size = static_cast<size_t>(params[4]);
+	
+	if (obj->SetArray(key, value, size))
+	{
+		return true;
+	}
+	else
+	{
+		return pContext->ThrowNativeError("Inconsistent types");
+	}
+}
+
+cell_t GetArray(IPluginContext *pContext, const cell_t *params) // handle, key, buffer, maxlen
+{
+	Handle_t hndl = static_cast<Handle_t>(params[1]);
+	HandleError err;
+	HandleSecurity sec;
+ 
+	sec.pOwner = NULL;
+	sec.pIdentity = myself->GetIdentity();
+ 
+
+	Object* obj;
+	if ((err = g_pHandleSys->ReadHandle(hndl, g_ObjectType, &sec, (void **)&obj)) != HandleError_None)
+	{
+		return pContext->ThrowNativeError("Invalid object handle %x (error %d)", hndl, err);
+	}
+ 
+	char* key;
+	pContext->LocalToString(params[2], &key);
+ 	
+	bool didFail;
+	CellArray* result;
+	
+	result = obj->GetArray(key, didFail);
+	if (didFail)
+	{
+		return pContext->ThrowNativeError("Inconsistent types");
+	}
+	else
+	{
+		cell_t* addr;
+		pContext->LocalToPhysAddr(params[3], &addr);
+		size_t size = static_cast<size_t>(params[4]);
+
+		memcpy(addr, result->c, sizeof(cell_t) * size);
+
+		return true;
+	}
+}
+
+cell_t GetArraySize(IPluginContext *pContext, const cell_t *params) // handle, key, buffer, maxlen
+{
+	Handle_t hndl = static_cast<Handle_t>(params[1]);
+	HandleError err;
+	HandleSecurity sec;
+ 
+	sec.pOwner = NULL;
+	sec.pIdentity = myself->GetIdentity();
+ 
+
+	Object* obj;
+	if ((err = g_pHandleSys->ReadHandle(hndl, g_ObjectType, &sec, (void **)&obj)) != HandleError_None)
+	{
+		return pContext->ThrowNativeError("Invalid object handle %x (error %d)", hndl, err);
+	}
+ 
+	char* key;
+	pContext->LocalToString(params[2], &key);
+ 	
+	bool didFail;
+	CellArray* result;
+	
+	result = obj->GetArray(key, didFail);
+	if (didFail)
+	{
+		return pContext->ThrowNativeError("Inconsistent types");
+	}
+	else
+	{
+		return result->size;
+	}
+}
+
 cell_t CreateObject(IPluginContext *pContext, const cell_t *params)
 {
 	Object* obj = new Object();
@@ -311,6 +417,9 @@ const sp_nativeinfo_t MyNatives[] =
 	{"GetObjectFloat",	GetFloat},
 	{"GetObjectString",	GetString},
 	{"SetObjectString",	SetString},
+	{"GetObjectArray",	GetArray},
+	{"SetObjectArray",	SetArray},
+	{"GetObjectArraySize",	GetArraySize},
 	{NULL,			NULL},
 };
 
