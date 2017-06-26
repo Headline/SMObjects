@@ -105,7 +105,8 @@ bool Object::SetString(std::string std, char* value)
 		}
 		else
 		{
-			Tvalue->p = value;
+			free(Tvalue->p);
+			Tvalue->p = strdup(value);
 			return true;
 		}
 	}
