@@ -23,4 +23,4 @@ PackageScript linguist-vendored
 *.py linguist-vendored
 
 # SourcePawn inc files aren't C :(
-*.inc linguist-language=SourcePawn
+smsdk_config.h linguist-language=C++
