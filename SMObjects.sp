@@ -49,5 +49,10 @@ public Action Command_Read(int client, int args)
 	{
 		PrintToServer("Should be %i: %i", i+1, testArray[i]);
 	}
+	
+	ArrayList list = new ArrayList();
+	obj.SetCell("list", list);
+	
+	delete list;
 	delete obj;
 }
