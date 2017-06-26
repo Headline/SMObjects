@@ -1,4 +1,4 @@
-# Objects
+# SMObjects
 Psuedo-Objects in SourceMod as an Extension
 
 ## Usage
