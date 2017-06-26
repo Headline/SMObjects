@@ -21,3 +21,6 @@ AMBuildScript linguist-vendored
 AMBuilder linguist-vendored
 PackageScript linguist-vendored
 *.py linguist-vendored
+
+# SourcePawn inc files aren't C :(
+*.inc linguist-language=SourcePawn
