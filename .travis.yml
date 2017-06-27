@@ -30,8 +30,8 @@ script:
   - echo "Building..."
   - ambuild
   - echo "Successfully built!"
-after_success:
-  - python ../upload.py
-branches:
-  only:
-  - master
+deploy:
+  provider: script
+  script: python ../upload.py
+  on:
+    branch: master
