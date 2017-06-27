@@ -1,7 +1,7 @@
 # AMBUILD DIR
-build/
+extension/build/
+extension/obj-*
 .vs/
-obj-windows-AMD64/
 
 # SOURCEMOD STUFF
 *.smx
