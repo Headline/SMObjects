@@ -39,7 +39,7 @@ def ReleaseVersion():
 
 if os.environ.get('TRAVIS_PULL_REQUEST', False) == "1":
 	quit()
-if os.environ.get('APPVEYOR_PULL_REQUEST_NUMBER', -999) != "-999"
+if os.environ.get('APPVEYOR_PULL_REQUEST_NUMBER', -999) != "-999":
 	quit()
 
 filename = '-'.join(['SMObjects', ReleaseVersion() + '.' + GITVersion(), platform])
