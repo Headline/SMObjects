@@ -46,7 +46,7 @@ if os.environ.get('TRAVIS_BRANCH', "master") != "master":
 	print('Skipping Travis-Ci Deployment. (Non-master)')
 	quit()
 # prevent Travis-CI from deploying on pull requests
-if os.environ.get('TRAVIS_PULL_REQUEST', False) != False:
+if os.environ.get('TRAVIS_PULL_REQUEST', 'false') != 'false':
 	print('Skipping Travis-Ci Deployment. PR Num: ' + str(os.environ.get('TRAVIS_PULL_REQUEST', False)))
 	quit()
 	
