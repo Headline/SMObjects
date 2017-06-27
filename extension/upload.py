@@ -37,8 +37,7 @@ def ReleaseVersion():
 	major, minor, release, tag = m.groups()
 	return '.'.join([major, minor, release])
 
-if os.environ.get('TRAVIS_PULL_REQUEST', 0) != 0:
-	quit()
+# prevent AppVeyor from uploading when building pull requests
 if os.environ.get('APPVEYOR_PULL_REQUEST_NUMBER', -999) != -999:
 	quit()
 
