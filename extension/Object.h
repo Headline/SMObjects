@@ -1,4 +1,7 @@
 #include <map>
+#include <string>
+#include <cstdlib>
+
 #include "smsdk_ext.h"
 
 enum UnionType

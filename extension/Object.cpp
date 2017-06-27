@@ -1,4 +1,5 @@
 #include "Object.h"
+#include <string.h>
 
 bool Object::SetBool(std::string std, bool value)
 {

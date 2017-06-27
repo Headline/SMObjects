@@ -1,5 +1,6 @@
 #include "extension.h"
 #include "Object.h"
+#include <cstring>
 
 Objects g_obj;		/**< Global singleton for extension's main interface */
 HandleType_t g_ObjectType;
@@ -9,7 +10,7 @@ class ObjectTypeHandler : public IHandleTypeDispatch
 public:
 	void OnHandleDestroy(HandleType_t type, void *object)
 	{
-		delete object;
+		delete ((Object*) object);
 	}
 };
 

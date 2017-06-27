@@ -1,0 +1,34 @@
+# Based off of asherkin's work https://github.com/asherkin/accelerator/blob/master/.travis.yml
+
+sudo: false
+language: cpp
+addons:
+  apt:
+    packages:
+    - lib32stdc++6
+    - lib32z1-dev
+    - libc6-dev-i386
+    - linux-libc-dev
+    - g++-multilib
+compiler:
+  - clang
+before_script:
+  - cd extension/
+  - git clone --branch=master --recursive https://github.com/alliedmodders/sourcemod
+  - git clone --branch=master https://github.com/alliedmodders/ambuild		
+  - git clone --branch=sdk2013 https://github.com/alliedmodders/hl2sdk hl2sdk-sdk2013		
+  - git clone --branch=master https://github.com/alliedmodders/metamod-source		
+  - echo "Sucessfully downloaded dependencies to build against..."
+  - cd ambuild && python setup.py install --user		
+  - echo "ambuild has been installed..."
+  - cd ..
+script:
+  - echo "Creating build directory"
+  - mkdir build && cd build
+  - echo "Configuring build"
+  - python ../configure.py
+  - echo "Building..."
+  - ambuild
+  - echo "Successfully built!"
+after_success:
+  - python ../upload.py
