@@ -20,6 +20,7 @@ def GITHash():
 	return stdout.rstrip('\r\n')
 
 def GITVersion():
+	subprocess.Popen(['git', 'fetch', '--unshallow'])
 	p = subprocess.Popen(['git', 'rev-list', '--count', '--first-parent', 'HEAD'], stdout = subprocess.PIPE, stderr = subprocess.PIPE)
 	(stdout, stderr) = p.communicate()
 	stdout = stdout.decode('UTF-8')
