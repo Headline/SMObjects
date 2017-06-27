@@ -41,8 +41,8 @@ def ReleaseVersion():
 if os.environ.get('APPVEYOR_PULL_REQUEST_NUMBER', -999) != -999:
 	quit()
 # prevent Travis-CI from deploying on other branches than master
-if os.environ.get('TRAVIS_BRANCH', "master") != "master":
-	quit()
+#if os.environ.get('TRAVIS_BRANCH', "master") != "master":
+#	quit()
 # prevent Travis-CI from deploying on pull requests
 if os.environ.get('TRAVIS_PULL_REQUEST', -999) != -999:
 	quit()
