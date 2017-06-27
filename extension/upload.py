@@ -37,6 +37,12 @@ def ReleaseVersion():
 	major, minor, release, tag = m.groups()
 	return '.'.join([major, minor, release])
 
+if os.environ.get('TRAVIS_PULL_REQUEST', False) == "1"
+	return	
+#if os.environ.get('APPVEYOR_PULL_REQUEST_NUMBER', False) == "1"
+#	return
+print('appveyor pr num: ' + os.environ.get('APPVEYOR_PULL_REQUEST_NUMBER', -999))
+
 filename = '-'.join(['SMObjects', ReleaseVersion() + '.' + GITVersion(), platform])
 
 debug_build = os.environ.get('is_debug_build', False) == "1"
