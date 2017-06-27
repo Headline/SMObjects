@@ -38,7 +38,7 @@ def ReleaseVersion():
 	return '.'.join([major, minor, release])
 
 if os.environ.get('TRAVIS_PULL_REQUEST', False) == "1":
-	return	
+	quit()	
 #if os.environ.get('APPVEYOR_PULL_REQUEST_NUMBER', False) == "1"
 #	return
 print('appveyor pr num: ' + os.environ.get('APPVEYOR_PULL_REQUEST_NUMBER', -999))
