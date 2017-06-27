@@ -7,9 +7,15 @@ Download linux and windows binaries from the [build page](http://michaelwflahert
 ## Usage
 
 ```c
-Handle handle = CreateObject();
-SetObjectInt(handle, "something", 32);
-PrintToServer("Some number: %i", GetObjectInt(handle, "something"));
+Object obj = new Object();
+obj.SetInt("something", 32); 
+obj.SetCell("list", new ArrayList());
+obj.GetCell("list").Push(40);
+
+PrintToServer("Some number: %i", obj.GetInt("something"));
+
+delete obj.GetCell("list"); // free ArrayList memory
+delete object; // free Object memory
 ```
 ## FAQ
 **Couldn't I just use 'X' instead?**
