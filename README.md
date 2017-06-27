@@ -1,6 +1,9 @@
 # SMObjects
 Psuedo-Objects in SourceMod as an Extension
 
+## Installation
+Download linux and windows binaries from the [build page](http://michaelwflaherty.com/SMObjects/)!
+
 ## Usage
 
 ```c
