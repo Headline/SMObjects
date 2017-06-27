@@ -26,7 +26,7 @@ script:
   - echo "Creating build directory"
   - mkdir build && cd build
   - echo "Configuring build"
-  - python ../configure.py
+  - python ../configure.py --enable-optimize
   - echo "Building..."
   - ambuild
   - echo "Successfully built!"
