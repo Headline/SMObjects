@@ -40,7 +40,9 @@ def ReleaseVersion():
 # prevent AppVeyor from uploading when building pull requests
 if os.environ.get('APPVEYOR_PULL_REQUEST_NUMBER', -999) != -999:
 	quit()
-
+if os.environ.get('TRAVIS_BRANCH', "master") != "master":
+	quit()
+	
 filename = '-'.join(['SMObjects', ReleaseVersion() + '.' + GITVersion(), platform])
 
 debug_build = os.environ.get('is_debug_build', False) == "1"
