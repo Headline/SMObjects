@@ -4,107 +4,308 @@
 #endif
 #define SMObjects_included
 
+/**
+ * Grabs an integer from a specified key.
+ * 
+ * @param Handle 	object
+ * @param char[]	key to pull value from
+ * @return       	integer value
+ */
 native int GetObjectInt(Handle obj, char[] key);
 
+/**
+ * Sets an integer for a specified key.
+ * 
+ * @param Handle 	object
+ * @param char[]	key to pull value from
+ * @param int		value
+ * @return       	true on success
+ */
 native bool SetObjectInt(Handle obj, char[] key, int value);
 
+/**
+ * Grabs a cell type for a specified key.
+ * Note: Use GetObjectInt for integers
+ * @param Handle 	object
+ * @param char[]	key to pull value from
+ * @return       	any value
+ */
 stock any GetObjectCell(Handle obj2, char[] key)
 {
 	return view_as<any>(GetObjectInt(obj2, key));
 }
 
+/**
+ * Sets a cell type for a specified key.
+ * Note: Use SetObjectInt for integers
+ * @param Handle 	object
+ * @param char[]	key to pull value from
+ * @param any		value
+ * @return       	true on success
+ */
 stock bool SetObjectCell(Handle obj2, char[] key, any value)
 {
 	return SetObjectInt(obj2, key, view_as<int>(value));
 }
 
+/**
+ * Grabs a float for a specified key.
+ *
+ * @param Handle 	object
+ * @param char[]	key to pull value from
+ * @return       	float value
+ */
 native float GetObjectFloat(Handle obj, char[] key);
 
+/**
+ * Sets a float for a specified key.
+ *
+ * @param Handle 	object
+ * @param char[]	key to pull value from
+ * @param float		value
+ * @return       	true on success
+ */
 native bool SetObjectFloat(Handle obj, char[] key, float value);
 
+/**
+ * Grabs a bool for a specified key.
+ *
+ * @param Handle 	object
+ * @param char[]	key to pull value from
+ * @return       	boolean value
+ */
 native bool GetObjectBool(Handle obj, char[] key);
 
+/**
+ * Sets a bool for a specified key.
+ *
+ * @param Handle 	object
+ * @param char[]	key to pull value from
+ * @param bool		value
+ * @return       	true on success
+ */
 native bool SetObjectBool(Handle obj, char[] key, bool value);
 
+/**
+ * Grabs a string for a specified key.
+ *
+ * @param Handle 	object
+ * @param char[]	key to pull value from
+ * @param char[]	output buffer
+ * @param int		max # of bytes to write
+ * @return       	true on success
+ */
 native bool GetObjectString(Handle obj, char[] key, char[] buffer, int maxsize);
 
+/**
+ * Sets a string for a specified key.
+ *
+ * @param Handle 	object
+ * @param char[]	key to pull value from
+ * @param char[]	input string
+ * @return       	true on success
+ */
 native bool SetObjectString(Handle obj, char[] key, char[] value);
 
+/**
+ * Gets an array for a specified key.
+ *
+ * @param Handle 	object
+ * @param char[]	key to pull value from
+ * @param any[]		output buffer
+ * @param int		max # of bytes to write
+ * @return       	true on success
+ */
 native bool GetObjectArray(Handle obj, char[] key, any[] buffer, int maxsize);
 
+/**
+ * Sets an array for a specified key.
+ *
+ * @param Handle 	object
+ * @param char[]	key to pull value from
+ * @param any[]		input buffer
+ * @param int		max # of bytes to read
+ * @return       	true on success
+ */
 native bool SetObjectArray(Handle obj, char[] key, any[] buffer, int maxsize);
 
+/**
+ * Grabs the size of a written array
+ *
+ * @param Handle 	object
+ * @param char[]	key to pull value from
+ * @return       	buffer size
+ */
 native int GetObjectArraySize(Handle obj, char[] key);
 
+/**
+ * Constructs an Object and returns the handle
+ *
+ * @return       	Object handle
+ */
 native Handle CreateObject();
 
 methodmap Object < Handle
 {
+	/**
+	 * Constructs an Object and returns the handle
+	 *
+	 * @return       	Object handle
+	 */
 	public Object()
 	{
 		return view_as<Object>(CreateObject());
 	}
 	
+	/**
+	 * Grabs an integer from a specified key.
+	 * 
+	 * @param char[]	key to pull value from
+	 * @return       	integer value
+	 */
 	public int GetInt(char[] key)
 	{
 		return GetObjectInt(this, key);
 	}
 	
+	/**
+	 * Sets an integer for a specified key.
+	 * 
+	 * @param char[]	key to pull value from
+	 * @param int		value
+	 * @return       	true on success
+	 */
 	public bool SetInt(char[] key, int value)
 	{
 		return SetObjectInt(this, key, value);
 	}
 	
+	/**
+	 * Grabs a cell type for a specified key.
+	 * Note: Use GetObjectInt for integers
+	 * @param char[]	key to pull value from
+	 * @return       	any value
+	 */
 	public any GetCell(char[] key)
 	{
 		return GetObjectCell(this, key);
 	}
 	
+	/**
+	 * Sets a cell type for a specified key.
+	 * Note: Use SetObjectInt for integers
+	 * @param char[]	key to pull value from
+	 * @param any		value
+	 * @return       	true on success
+	 */
 	public bool SetCell(char[] key, any value)
 	{
 		return SetObjectCell(this, key, value);
 	}
 	
+	/**
+	 * Grabs a bool for a specified key.
+	 *
+	 * @param char[]	key to pull value from
+	 * @return       	boolean value
+	 */
 	public bool GetBool(char[] key)
 	{
 		return GetObjectBool(this, key);
 	}
 	
+	/**
+	 * Sets a bool for a specified key.
+	 *
+	 * @param char[]	key to pull value from
+	 * @param bool		value
+	 * @return       	true on success
+	 */
 	public bool SetBool(char[] key, bool value)
 	{
 		return SetObjectBool(this, key, value);
 	}
 
+	/**
+	 * Grabs a float for a specified key.
+	 *
+	 * @param char[]	key to pull value from
+	 * @return       	float value
+	 */
 	public float GetFloat(char[] key)
 	{
 		return GetObjectFloat(this, key);
 	}
 	
+	/**
+	 * Sets a float for a specified key.
+	 *
+	 * @param char[]	key to pull value from
+	 * @param float		value
+	 * @return       	true on success
+	 */
 	public bool SetFloat(char[] key, float value)
 	{
 		return SetObjectFloat(this, key, value);
 	}
 	
+	/**
+	 * Grabs a string for a specified key.
+	 *
+	 * @param char[]	key to pull value from
+	 * @param char[]	output buffer
+	 * @param int		max # of bytes to write
+	 * @return       	true on success
+	 */
 	public bool GetString(char[] key, char[] buffer, int length)
 	{
 		return GetObjectString(this, key, buffer, length);
 	}
 	
+	/**
+	 * Sets a string for a specified key.
+	 *
+	 * @param char[]	key to pull value from
+	 * @param char[]	input string
+	 * @return       	true on success
+	 */
 	public bool SetString(char[] key, char[] value)
 	{
 		return SetObjectString(this, key, value);
 	}
 	
+	/**
+	 * Gets an array for a specified key.
+	 *
+	 * @param char[]	key to pull value from
+	 * @param any[]		output buffer
+	 * @param int		max # of bytes to write
+	 * @return       	true on success
+	 */
 	public bool GetArray(char[] key, any[] buffer, int length)
 	{
 		return GetObjectArray(this, key, buffer, length);
 	}
 	
+	/**
+	 * Sets an array for a specified key.
+	 *
+	 * @param char[]	key to pull value from
+	 * @param any[]		input buffer
+	 * @param int		max # of bytes to read
+	 * @return       	true on success
+	 */
 	public bool SetArray(char[] key, any[] buffer, int length)
 	{
 		return SetObjectArray(this, key, buffer, length);
 	}
 	
+	/**
+	 * Grabs the size of a written array
+	 *
+	 * @param char[]	key to pull value from
+	 * @return       	buffer size
+	 */
 	public int GetArraySize(char[] key)
 	{
 		return GetObjectArraySize(this, key);
