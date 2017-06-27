@@ -22,7 +22,7 @@ before_script:
   - cd ambuild && python setup.py install --user		
   - echo "ambuild has been installed..."
   - cd ..
- script:
+script:
   - echo "Creating build directory"
   - mkdir build && cd build
   - echo "Configuring build"
@@ -30,5 +30,5 @@ before_script:
   - echo "Building..."
   - ambuild
   - echo "Successfully built!"
- after_success:
+after_success:
   - python ../upload.py
