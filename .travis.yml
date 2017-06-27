@@ -32,3 +32,6 @@ script:
   - echo "Successfully built!"
 after_success:
   - python ../upload.py
+branches:
+  only:
+  - master
