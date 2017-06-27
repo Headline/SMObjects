@@ -30,5 +30,5 @@ before_script:
   - echo "Building..."
   - ambuild
   - echo "Successfully built!"
-after_success:
+ after_success:
   - python ../upload.py
