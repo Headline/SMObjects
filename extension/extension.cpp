@@ -421,6 +421,21 @@ const sp_nativeinfo_t MyNatives[] =
 	{"GetObjectArray",	GetArray},
 	{"SetObjectArray",	SetArray},
 	{"GetObjectArraySize",	GetArraySize},
+	
+	// New Syntax
+	{"Object.Object",	CreateObject},
+	{"Object.SetInt",	SetInt},
+	{"Object.GetInt",	GetInt},
+	{"Object.SetBool",	SetBool},
+	{"Object.GetBool",	GetBool},
+	{"Object.SetFloat",	SetFloat},
+	{"Object.GetFloat",	GetFloat},
+	{"Object.GetString",	GetString},
+	{"Object.SetString",	SetString},
+	{"Object.GetArray",	GetArray},
+	{"Object.SetArray",	SetArray},
+	{"Object.GetArraySize",	GetArraySize},
+
 	{NULL,			NULL},
 };
 

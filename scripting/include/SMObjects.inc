@@ -152,10 +152,7 @@ methodmap Object < Handle
 	 *
 	 * @return       	Object handle
 	 */
-	public Object()
-	{
-		return view_as<Object>(CreateObject());
-	}
+	public native Object();
 	
 	/**
 	 * Grabs an integer from a specified key.
@@ -163,10 +160,7 @@ methodmap Object < Handle
 	 * @param char[]	key to pull value from
 	 * @return       	integer value
 	 */
-	public int GetInt(char[] key)
-	{
-		return GetObjectInt(this, key);
-	}
+	public native int GetInt(char[] key);
 	
 	/**
 	 * Sets an integer for a specified key.
@@ -175,10 +169,7 @@ methodmap Object < Handle
 	 * @param int		value
 	 * @return       	true on success
 	 */
-	public bool SetInt(char[] key, int value)
-	{
-		return SetObjectInt(this, key, value);
-	}
+	public native bool SetInt(char[] key, int value);
 	
 	/**
 	 * Grabs a cell type for a specified key.
@@ -186,10 +177,7 @@ methodmap Object < Handle
 	 * @param char[]	key to pull value from
 	 * @return       	any value
 	 */
-	public any GetCell(char[] key)
-	{
-		return GetObjectCell(this, key);
-	}
+	public native any GetCell(char[] key);
 	
 	/**
 	 * Sets a cell type for a specified key.
@@ -198,10 +186,7 @@ methodmap Object < Handle
 	 * @param any		value
 	 * @return       	true on success
 	 */
-	public bool SetCell(char[] key, any value)
-	{
-		return SetObjectCell(this, key, value);
-	}
+	public native bool SetCell(char[] key, any value);
 	
 	/**
 	 * Grabs a bool for a specified key.
@@ -209,10 +194,7 @@ methodmap Object < Handle
 	 * @param char[]	key to pull value from
 	 * @return       	boolean value
 	 */
-	public bool GetBool(char[] key)
-	{
-		return GetObjectBool(this, key);
-	}
+	public native bool GetBool(char[] key);
 	
 	/**
 	 * Sets a bool for a specified key.
@@ -221,10 +203,7 @@ methodmap Object < Handle
 	 * @param bool		value
 	 * @return       	true on success
 	 */
-	public bool SetBool(char[] key, bool value)
-	{
-		return SetObjectBool(this, key, value);
-	}
+	public native bool SetBool(char[] key, bool value);
 
 	/**
 	 * Grabs a float for a specified key.
@@ -232,10 +211,7 @@ methodmap Object < Handle
 	 * @param char[]	key to pull value from
 	 * @return       	float value
 	 */
-	public float GetFloat(char[] key)
-	{
-		return GetObjectFloat(this, key);
-	}
+	public native float GetFloat(char[] key);
 	
 	/**
 	 * Sets a float for a specified key.
@@ -244,10 +220,7 @@ methodmap Object < Handle
 	 * @param float		value
 	 * @return       	true on success
 	 */
-	public bool SetFloat(char[] key, float value)
-	{
-		return SetObjectFloat(this, key, value);
-	}
+	public native bool SetFloat(char[] key, float value);
 	
 	/**
 	 * Grabs a string for a specified key.
@@ -257,10 +230,7 @@ methodmap Object < Handle
 	 * @param int		max # of bytes to write
 	 * @return       	true on success
 	 */
-	public bool GetString(char[] key, char[] buffer, int length)
-	{
-		return GetObjectString(this, key, buffer, length);
-	}
+	public native bool GetString(char[] key, char[] buffer, int length);
 	
 	/**
 	 * Sets a string for a specified key.
@@ -269,10 +239,7 @@ methodmap Object < Handle
 	 * @param char[]	input string
 	 * @return       	true on success
 	 */
-	public bool SetString(char[] key, char[] value)
-	{
-		return SetObjectString(this, key, value);
-	}
+	public native bool SetString(char[] key, char[] value);
 	
 	/**
 	 * Gets an array for a specified key.
@@ -282,10 +249,7 @@ methodmap Object < Handle
 	 * @param int		max # of bytes to write
 	 * @return       	true on success
 	 */
-	public bool GetArray(char[] key, any[] buffer, int length)
-	{
-		return GetObjectArray(this, key, buffer, length);
-	}
+	public native bool GetArray(char[] key, any[] buffer, int length);
 	
 	/**
 	 * Sets an array for a specified key.
@@ -295,10 +259,7 @@ methodmap Object < Handle
 	 * @param int		max # of bytes to read
 	 * @return       	true on success
 	 */
-	public bool SetArray(char[] key, any[] buffer, int length)
-	{
-		return SetObjectArray(this, key, buffer, length);
-	}
+	public native bool SetArray(char[] key, any[] buffer, int length);
 	
 	/**
 	 * Grabs the size of a written array
@@ -306,10 +267,7 @@ methodmap Object < Handle
 	 * @param char[]	key to pull value from
 	 * @return       	buffer size
 	 */
-	public int GetArraySize(char[] key)
-	{
-		return GetObjectArraySize(this, key);
-	}
+	public native int GetArraySize(char[] key);
 };
 
 public Extension __ext_objects = 
