@@ -1,7 +1,7 @@
 #include "Object.h"
 #include <string.h>
 
-bool Object::SetBool(std::string std, bool value)
+void Object::SetBool(std::string std, bool value)
 {
 	std::pair<ObjectMap::iterator, bool> ret; 
 	
@@ -10,15 +10,18 @@ bool Object::SetBool(std::string std, bool value)
 	if (!ret.second) // if value already exists
 	{	
 		T* str = ret.first->second;
-		if (str->type == boolean)
+		
+		if (str->type == pChar)
 		{
-			str->b = value;
-			return true;
+			free(str->p);
 		}
-		else
+		else if (str->type == cellArray)
 		{
-			return false;
+			free(str->array->c);	
 		}
+		
+		str->type = boolean;
+		str->b = value;
 	}
 	else
 	{
@@ -27,7 +30,6 @@ bool Object::SetBool(std::string std, bool value)
 		str->type = boolean;
 		
 		ret.first->second = str;
-		return true;
 	}
 }
 
@@ -45,7 +47,7 @@ bool Object::GetBool(std::string std, bool &didFail)
 	return value->b;
 }
 
-bool Object::SetInt(std::string std, int value)
+void Object::SetInt(std::string std, int value)
 {
 	std::pair<ObjectMap::iterator, bool> ret; 
 	
@@ -54,15 +56,18 @@ bool Object::SetInt(std::string std, int value)
 	if (!ret.second) // if value already exists
 	{	
 		T* str = ret.first->second;
-		if (str->type == integer)
+		
+		if (str->type == pChar)
 		{
-			str->i = value;
-			return true;
+			free(str->p);
 		}
-		else
+		else if (str->type == cellArray)
 		{
-			return false;
+			free(str->array->c);	
 		}
+		
+		str->type = integer;
+		str->i = value;
 	}
 	else
 	{
@@ -71,7 +76,6 @@ bool Object::SetInt(std::string std, int value)
 		str->type = integer;
 		
 		ret.first->second = str;
-		return true;
 	}
 }
 
@@ -90,7 +94,7 @@ int Object::GetInt(std::string std, bool &didFail)
 }
 
 
-bool Object::SetString(std::string std, char* value)
+void Object::SetString(std::string std, char* value)
 {
 	std::pair<ObjectMap::iterator, bool> ret; 
 	
@@ -99,17 +103,18 @@ bool Object::SetString(std::string std, char* value)
 	if (!ret.second) // if value already exists
 	{	
 		T* str = ret.first->second;
+		
 		if (str->type == pChar)
 		{
 			free(str->p);
-			str->p = strdup(value);
-
-			return true;
 		}
-		else
+		else if (str->type == cellArray)
 		{
-			return false;
+			free(str->array->c);	
 		}
+
+		str->type = pChar;
+		str->p = strdup(value);
 	}
 	else
 	{
@@ -118,7 +123,6 @@ bool Object::SetString(std::string std, char* value)
 		str->type = pChar;
 		
 		ret.first->second = str;
-		return true;
 	}
 }
 
@@ -136,7 +140,7 @@ char* Object::GetString(std::string std, bool &didFail)
 	return value->p;
 }
 
-bool Object::SetFloat(std::string std, float value)
+void Object::SetFloat(std::string std, float value)
 {
 	std::pair<ObjectMap::iterator, bool> ret; 
 	
@@ -145,15 +149,18 @@ bool Object::SetFloat(std::string std, float value)
 	if (!ret.second) // if value already exists
 	{	
 		T* str = ret.first->second;
-		if (str->type == floatingPoint)
+		
+		if (str->type == pChar)
 		{
-			str->f = value;
-			return true;
+			free(str->p);
 		}
-		else
+		else if (str->type == cellArray)
 		{
-			return false;
+			free(str->array->c);	
 		}
+		
+		str->type = floatingPoint;
+		str->f = value;
 	}
 	else
 	{
@@ -162,7 +169,6 @@ bool Object::SetFloat(std::string std, float value)
 		str->type = floatingPoint;
 		
 		ret.first->second = str;
-		return true;
 	}
 }
 
@@ -180,7 +186,7 @@ float Object::GetFloat(std::string std, bool &didFail)
 	return value->f;
 }
 
-bool Object::SetArray(std::string std, cell_t* value, size_t size)
+void Object::SetArray(std::string std, cell_t* value, size_t size)
 {
 	std::pair<ObjectMap::iterator, bool> ret; 
 	
@@ -189,19 +195,21 @@ bool Object::SetArray(std::string std, cell_t* value, size_t size)
 	if (!ret.second) // if value already exists
 	{	
 		T* str = ret.first->second;
-		if (str->type == cellArray)
+		
+		if (str->type == pChar)
 		{
-			free(str->array->c);
-			
-			str->array->c = (cell_t*) malloc(sizeof(cell_t) * size);
-			memcpy(str->array->c, value, sizeof(cell_t) * size);
-			str->array->size = size;
-			return true;
+			free(str->p);
 		}
-		else
+		else if (str->type == cellArray)
 		{
-			return false;
+			free(str->array->c);	
 		}
+
+		
+		str->type = cellArray;
+		str->array->c = (cell_t*) malloc(sizeof(cell_t) * size);
+		memcpy(str->array->c, value, sizeof(cell_t) * size);
+		str->array->size = size;
 	}
 	else // values doesn't exist so insert
 	{
@@ -214,7 +222,6 @@ bool Object::SetArray(std::string std, cell_t* value, size_t size)
 		str->array->size = size;
 
 		ret.first->second = str;
-		return true;
 	}
 }
 
