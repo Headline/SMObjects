@@ -259,7 +259,7 @@ methodmap Object < Handle
 	 * @param int		max # of bytes to read
 	 * @return       	true on success
 	 */
-	public nativebool SetArray(char[] key, any[] buffer, int length);
+	public native bool SetArray(char[] key, any[] buffer, int length);
 	
 	/**
 	 * Grabs the size of a written array
