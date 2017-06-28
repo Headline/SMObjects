@@ -37,14 +37,9 @@ cell_t SetInt(IPluginContext *pContext, const cell_t *params)
  
 	int value = params[3];
 	
-	if (obj->SetInt(key, value))
-	{
-		return true;
-	}
-	else
-	{
-		return pContext->ThrowNativeError("Inconsistent types");
-	}
+	obj->SetInt(key, value);
+	
+	return 1;
 }
 
 cell_t GetInt(IPluginContext *pContext, const cell_t *params)
@@ -102,14 +97,9 @@ cell_t SetBool(IPluginContext *pContext, const cell_t *params)
 	bool value = params[3];
 	
 	
-	if (obj->SetBool(key, value))
-	{
-		return true;
-	}
-	else
-	{
-		return pContext->ThrowNativeError("Inconsistent types");
-	}
+	obj->SetBool(key, value);
+	
+	return 1;
 }
 
 cell_t GetBool(IPluginContext *pContext, const cell_t *params)
@@ -168,14 +158,9 @@ cell_t SetString(IPluginContext *pContext, const cell_t *params)
 	pContext->LocalToString(params[3], &value);
 	
 	
-	if (obj->SetString(key, value))
-	{
-		return true;
-	}
-	else
-	{
-		return pContext->ThrowNativeError("Inconsistent types");
-	}
+	obj->SetString(key, value);
+	
+	return 1;
 }
 
 cell_t GetString(IPluginContext *pContext, const cell_t *params) // handle, key, str, size
@@ -238,14 +223,9 @@ cell_t SetFloat(IPluginContext *pContext, const cell_t *params)
 	float value = sp_ctof(params[3]);
 	
 	
-	if (obj->SetFloat(key, value))
-	{
-		return true;
-	}
-	else
-	{
-		return pContext->ThrowNativeError("Inconsistent types");
-	}
+	obj->SetFloat(key, value);
+	
+	return 1;
 }
 
 cell_t GetFloat(IPluginContext *pContext, const cell_t *params)
@@ -305,14 +285,9 @@ cell_t SetArray(IPluginContext *pContext, const cell_t *params) // handle, key, 
 	
 	size_t size = static_cast<size_t>(params[4]);
 	
-	if (obj->SetArray(key, value, size))
-	{
-		return true;
-	}
-	else
-	{
-		return pContext->ThrowNativeError("Inconsistent types");
-	}
+	obj->SetArray(key, value, size);
+	
+	return 1;
 }
 
 cell_t GetArray(IPluginContext *pContext, const cell_t *params) // handle, key, buffer, maxlen
@@ -377,6 +352,7 @@ cell_t GetArraySize(IPluginContext *pContext, const cell_t *params) // handle, k
 	CellArray* result;
 	
 	result = obj->GetArray(key, didFail);
+	
 	if (didFail)
 	{
 		return pContext->ThrowNativeError("Inconsistent types");
