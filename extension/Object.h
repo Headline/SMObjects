@@ -50,19 +50,19 @@ private:
 	ObjectMap m;
 
 public:
-	bool SetBool(std::string, bool);
+	void SetBool(std::string, bool);
 	bool GetBool(std::string, bool&);
 
-	bool SetInt(std::string, int);
+	void SetInt(std::string, int);
 	int GetInt(std::string, bool&);
 
-	bool SetString(std::string, char*);
+	void SetString(std::string, char*);
 	char* GetString(std::string, bool&);
 	
-	bool SetFloat(std::string, float);
+	void SetFloat(std::string, float);
 	float GetFloat(std::string, bool&);
 	
-	bool SetArray(std::string, cell_t*, size_t);
+	void SetArray(std::string, cell_t*, size_t);
 	CellArray* GetArray(std::string, bool&);
 
 	~Object();
