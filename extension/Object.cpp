@@ -3,28 +3,31 @@
 
 bool Object::SetBool(std::string std, bool value)
 {
-	if (m.count(std) == 0) // doesn't exist create
+	std::pair<ObjectMap::iterator, bool> ret; 
+	
+	ret = m.insert(std::pair<std::string, T*>(std, NULL));
+	
+	if (!ret.second) // if value already exists
+	{	
+		T* str = ret.first->second;
+		if (str->type == boolean)
+		{
+			str->b = value;
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	else
 	{
 		T* str = new T;
 		str->b = value;
 		str->type = boolean;
-
-		m.insert(std::make_pair(std, str));
+		
+		ret.first->second = str;
 		return true;
-	}
-	else // does exist set
-	{
-		T* Tvalue = m.find(std)->second;
-
-		if (Tvalue->type != boolean)
-		{
-			return false;
-		}
-		else
-		{
-			Tvalue->b = value;
-			return true;
-		}
 	}
 }
 
@@ -44,28 +47,31 @@ bool Object::GetBool(std::string std, bool &didFail)
 
 bool Object::SetInt(std::string std, int value)
 {
-	if (m.count(std) == 0) // doesn't exist create
+	std::pair<ObjectMap::iterator, bool> ret; 
+	
+	ret = m.insert(std::pair<std::string, T*>(std, NULL));
+	
+	if (!ret.second) // if value already exists
+	{	
+		T* str = ret.first->second;
+		if (str->type == integer)
+		{
+			str->i = value;
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	else
 	{
 		T* str = new T;
 		str->i = value;
 		str->type = integer;
-
-		m.insert(std::make_pair(std, str));
+		
+		ret.first->second = str;
 		return true;
-	}
-	else // does exist set
-	{
-		T* Tvalue = m.find(std)->second;
-
-		if (Tvalue->type != integer)
-		{
-			return false;
-		}
-		else
-		{
-			Tvalue->i = value;
-			return true;
-		}
 	}
 }
 
@@ -86,30 +92,33 @@ int Object::GetInt(std::string std, bool &didFail)
 
 bool Object::SetString(std::string std, char* value)
 {
-	if (m.count(std) == 0) // doesn't exist create
-	{
-		T* str = new T;
-		str->type = pChar;
-		
-		str->p = strdup(value);
-		
-		m.insert(std::make_pair(std, str));
-		return true;
-	}
-	else // does exist set
-	{
-		T* Tvalue = m.find(std)->second;
-
-		if (Tvalue->type != pChar)
+	std::pair<ObjectMap::iterator, bool> ret; 
+	
+	ret = m.insert(std::pair<std::string, T*>(std, NULL));
+	
+	if (!ret.second) // if value already exists
+	{	
+		T* str = ret.first->second;
+		if (str->type == pChar)
 		{
-			return false;
+			free(str->p);
+			str->p = strdup(value);
+
+			return true;
 		}
 		else
 		{
-			free(Tvalue->p);
-			Tvalue->p = strdup(value);
-			return true;
+			return false;
 		}
+	}
+	else
+	{
+		T* str = new T;
+		str->p = strdup(value);
+		str->type = pChar;
+		
+		ret.first->second = str;
+		return true;
 	}
 }
 
@@ -129,28 +138,31 @@ char* Object::GetString(std::string std, bool &didFail)
 
 bool Object::SetFloat(std::string std, float value)
 {
-	if (m.count(std) == 0) // doesn't exist create
+	std::pair<ObjectMap::iterator, bool> ret; 
+	
+	ret = m.insert(std::pair<std::string, T*>(std, NULL));
+	
+	if (!ret.second) // if value already exists
+	{	
+		T* str = ret.first->second;
+		if (str->type == floatingPoint)
+		{
+			str->f = value;
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	else
 	{
 		T* str = new T;
 		str->f = value;
 		str->type = floatingPoint;
-
-		m.insert(std::make_pair(std, str));
+		
+		ret.first->second = str;
 		return true;
-	}
-	else // does exist set
-	{
-		T* Tvalue = m.find(std)->second;
-
-		if (Tvalue->type != floatingPoint)
-		{
-			return false;
-		}
-		else
-		{
-			Tvalue->f = value;
-			return true;
-		}
 	}
 }
 
@@ -170,7 +182,28 @@ float Object::GetFloat(std::string std, bool &didFail)
 
 bool Object::SetArray(std::string std, cell_t* value, size_t size)
 {
-	if (m.count(std) == 0) // doesn't exist create
+	std::pair<ObjectMap::iterator, bool> ret; 
+	
+	ret = m.insert(std::pair<std::string, T*>(std, NULL));
+	
+	if (!ret.second) // if value already exists
+	{	
+		T* str = ret.first->second;
+		if (str->type == cellArray)
+		{
+			free(str->array->c);
+			
+			str->array->c = (cell_t*) malloc(sizeof(cell_t) * size);
+			memcpy(str->array->c, value, sizeof(cell_t) * size);
+			str->array->size = size;
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	else // values doesn't exist so insert
 	{
 		T* str = new T;
 		str->type = cellArray;
@@ -179,28 +212,9 @@ bool Object::SetArray(std::string std, cell_t* value, size_t size)
 		str->array->c = (cell_t*) malloc(sizeof(cell_t) * size);
 		memcpy(str->array->c, value, sizeof(cell_t) * size);
 		str->array->size = size;
-		
-		m.insert(std::make_pair(std, str));
-		return true;
-	}
-	else // does exist set
-	{
-		T* str = m.find(std)->second;
 
-		if (str->type != cellArray)
-		{
-			return false;
-		}
-		else
-		{
-			free(str->array->c);
-			
-			str->array->c = (cell_t*) malloc(sizeof(cell_t) * size);
-			memcpy(str->array->c, value, sizeof(cell_t) * size);
-			str->array->size = size;
-			
-			return true;
-		}
+		ret.first->second = str;
+		return true;
 	}
 }
 
