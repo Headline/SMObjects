@@ -1,9 +1,7 @@
 # SMObjects
 Psuedo-Objects in SourceMod as an Extension
 
-Windows: [![Build status](https://ci.appveyor.com/api/projects/status/uauod4oikf96sjv7?svg=true)](https://ci.appveyor.com/project/Headline22/smobjects)
-
-Linux: [![Build Status](https://travis-ci.org/Headline22/SMObjects.svg?branch=master)](https://travis-ci.org/Headline22/SMObjects)
+**Windows:** [![Build status](https://ci.appveyor.com/api/projects/status/uauod4oikf96sjv7?svg=true)](https://ci.appveyor.com/project/Headline22/smobjects) ** | Linux:** [![Build Status](https://travis-ci.org/Headline22/SMObjects.svg?branch=master)](https://travis-ci.org/Headline22/SMObjects)
 ## Installation
 Download linux and windows binaries from the [build page](http://michaelwflaherty.com/SMObjects/)!
 
