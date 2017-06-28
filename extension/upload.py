@@ -50,7 +50,7 @@ if os.environ.get('TRAVIS_PULL_REQUEST', 'false') != 'false':
 	print('Skipping Travis-Ci Deployment. PR Num: ' + str(os.environ.get('TRAVIS_PULL_REQUEST', False)))
 	quit()
 	
-filename = '-'.join(['SMObjects', ReleaseVersion() + '.' + GITVersion(), platform])
+filename = '-'.join(['SMObjects', ReleaseVersion(), 'git' + GITVersion(), platform])
 
 debug_build = os.environ.get('is_debug_build', False) == "1"
 
