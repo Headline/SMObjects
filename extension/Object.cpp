@@ -147,7 +147,7 @@ bool Object::SetFloat(std::string std, float value)
 		T* str = ret.first->second;
 		if (str->type == floatingPoint)
 		{
-			str->i = value;
+			str->f = value;
 			return true;
 		}
 		else
@@ -158,7 +158,7 @@ bool Object::SetFloat(std::string std, float value)
 	else
 	{
 		T* str = new T;
-		str->i = value;
+		str->f = value;
 		str->type = floatingPoint;
 		
 		ret.first->second = str;

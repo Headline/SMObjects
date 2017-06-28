@@ -1,0 +1,8 @@
+[SMOBJECTS] Object creation took 0.002454 seconds
+[SMOBJECTS] Object writing took 0.013774 seconds
+[SMOBJECTS] Object reading took 0.004659 seconds
+[SMOBJECTS] Object deletion took 0.007978 seconds
+[SM] Plugin SMObjects-Profiler.smx reloaded successfully.
+
+
+--- OLD ---
