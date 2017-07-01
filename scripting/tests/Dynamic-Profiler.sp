@@ -6,7 +6,7 @@
 
 Handle profiler;
 
-Dynamic objects[5000];
+Dynamic objects[10000];
 
 
 public void OnPluginStart()
