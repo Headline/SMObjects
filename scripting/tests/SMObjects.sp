@@ -85,10 +85,12 @@ public Action Command_Read(int client, int args)
 				obj.GetMemberArray(i, array, size);
 				PrintToServer("\"%s\": %s", key, array);
 			}
-
 		}
 	}
-
+	
+	KeyValues kv = obj.ToKeyValues();
+	kv.ExportToFile("export.txt");
 	delete view_as<ArrayList>(obj.GetCell("list"));
 	delete obj;
+	delete kv;
 }

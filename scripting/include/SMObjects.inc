@@ -154,20 +154,124 @@ methodmap Object < Handle
 		public native get();
 	}
 
+	/**
+	 * Gets the type of a specified index
+	 *
+	 * @param index		member index
+	 * @return none
+	 */
 	public native ObjectType GetMemberType(int index);
 	
+	/**
+	 * Grabs the key name for a member index
+	 *
+	 * @param index		member index
+	 * @param buffer	buffer to write to
+	 * @param maxlen	max number of bytes to write
+	 * @return none
+	 */
 	public native int GetMemberKey(int index, char[] buffer, int maxlen);
 	
+	/**
+	 * Gets the int from a member index
+	 *
+	 * @param index		member index
+	 * @return int		value
+	 */
 	public native int GetMemberInt(int index);
 	
+	/**
+	 * Gets the float from a member index
+	 *
+	 * @param index		member index
+	 * @return float	value
+	 */
 	public native float GetMemberFloat(int index);
+	
+	/**
+	 * Gets the bool from a member index
+	 *
+	 * @param index		member index
+	 * @return bool		value
+	 */
 	public native bool GetMemberBool(int index);
 
+	/**
+	 * Gets the string from a member index
+	 *
+	 * @param index		member index
+	 * @param buffer	buffer to write to
+	 * @param maxlen	max length
+	 * @return none
+	 */
 	public native void GetMemberString(int index, char[] buffer, int maxlen);
 	
+	/**
+	 * Gets the any[] array from a member index
+	 *
+	 * @param index		member index
+	 * @param buffer	buffer to write to
+	 * @param maxlen	max length
+	 * @return none
+	 */
 	public native void GetMemberArray(int index, any[] buffer, int maxlen);
+	
+	/**
+	 * Get's a member's array size (required for GetMemberArray)
+	 *
+	 * @param index		member index
+	 * @return int		size
+	 */
 	public native int GetMemberArraySize(int index);
-
+	
+	/**
+	 * Converts an SMObject type into a KeyValues structure.
+	 *
+	 * Creates a new handle that must be closed.
+	 *
+	 * @return KeyValues   	KV Structure
+	 */
+	public KeyValues ToKeyValues()
+	{
+		KeyValues kv = new KeyValues("SMObject");
+		
+		for (int i = 0; i < this.MemberCount; i++)
+		{
+			// Create new KV key
+			char keyName[16];
+			IntToString(i, keyName, sizeof(keyName));
+			
+			// Get Current SMObject key
+			char key[32];
+			this.GetMemberKey(i, key, sizeof(key));
+			
+			// Get type
+			ObjectType type = this.GetMemberType(i);
+			
+			// Write type and key to KeyValues
+			switch (type)
+			{
+				case Type_Integer:
+					kv.SetNum(key, this.GetMemberInt(i));
+				case Type_Boolean:
+					kv.SetNum(key, view_as<int>(this.GetMemberBool(i)));
+				case Type_Float:
+					kv.SetFloat(key, this.GetMemberFloat(i));
+				case Type_String:
+				{
+					char value[128];
+					this.GetMemberString(i, value, sizeof(value));
+					kv.SetString(key, value);
+				}
+				case Type_CellArray:
+				{
+					// do nothing, what would we do?
+				}
+			}
+		}
+		
+		return kv;
+	}
 };
 
 public Extension __ext_objects = 
