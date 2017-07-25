@@ -4,7 +4,7 @@
 UnionType Object::GetType(int index)
 {
     ObjectMap::iterator it;
-    int count;
+    int count = 0;
     for (it = m.begin(); it != m.end(); ++it)
     {
         if (count == index)
