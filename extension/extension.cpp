@@ -379,7 +379,7 @@ cell_t GetSize(IPluginContext *pContext, const cell_t *params)
         return pContext->ThrowNativeError("Invalid object handle %x (error %d)", hndl, err);
     }
     
-    return obj->size();
+    return obj->Size();
 }
 
 cell_t CreateObject(IPluginContext *pContext, const cell_t *params)

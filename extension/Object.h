@@ -65,5 +65,7 @@ public:
 	void SetArray(std::string, cell_t*, size_t);
 	CellArray* GetArray(std::string, bool&);
 
+    int Size();
+    
 	~Object();
 };

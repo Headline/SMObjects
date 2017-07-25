@@ -47,6 +47,11 @@ bool Object::GetBool(std::string std, bool &didFail)
 	return value->b;
 }
 
+int Object::Size()
+{
+    return m->size();
+}
+
 void Object::SetInt(std::string std, int value)
 {
 	std::pair<ObjectMap::iterator, bool> ret; 
