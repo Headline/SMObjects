@@ -149,7 +149,7 @@ methodmap Object < Handle
 	 *
 	 * @return int   	Size
 	 */
-	property int Size
+	property int MemberCount
 	{
 		public native get();
 	}

@@ -21,6 +21,9 @@ public Action Command_Write(int client, int args)
 	
 	int testArray[] = {1, 2, 3, 4, 5};
 	obj.SetArray("testarray", testArray, sizeof(testArray));
+	
+	ArrayList list = new ArrayList();
+	obj.SetCell("list", list);
 }
 
 public Action Command_Read(int client, int args)
@@ -49,10 +52,12 @@ public Action Command_Read(int client, int args)
 	{
 		PrintToServer("Should be %i: %i", i+1, testArray[i]);
 	}
+
 	
-	ArrayList list = new ArrayList();
-	obj.SetCell("list", list);
+	PrintToServer("Object member count: %i", obj.MemberCount);
+	PrintToServer("Object type of 0: %i", obj.GetType(0));
 	
-	delete list;
+
+	delete view_as<ArrayList>(obj.GetCell("list"));
 	delete obj;
 }
