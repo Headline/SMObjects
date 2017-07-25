@@ -385,20 +385,6 @@ cell_t CreateObject(IPluginContext *pContext, const cell_t *params)
 
 const sp_nativeinfo_t MyNatives[] = 
 {
-	{"CreateObject",	CreateObject},
-	{"SetObjectInt",	SetInt},
-	{"GetObjectInt",	GetInt},
-	{"SetObjectBool",	SetBool},
-	{"GetObjectBool",	GetBool},
-	{"SetObjectFloat",	SetFloat},
-	{"GetObjectFloat",	GetFloat},
-	{"GetObjectString",	GetString},
-	{"SetObjectString",	SetString},
-	{"GetObjectArray",	GetArray},
-	{"SetObjectArray",	SetArray},
-	{"GetObjectArraySize",	GetArraySize},
-	
-	// New Syntax
 	{"Object.Object",	CreateObject},
 	{"Object.SetInt",	SetInt},
 	{"Object.GetInt",	GetInt},
