@@ -49,7 +49,7 @@ bool Object::GetBool(std::string std, bool &didFail)
 
 int Object::Size()
 {
-    return m->size();
+    return m.size();
 }
 
 void Object::SetInt(std::string std, int value)
