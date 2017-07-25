@@ -68,6 +68,6 @@ public:
 
     int Size();
     
-    UnionType GetType(int);
+    std::pair<std::string, T*> GetPair(int);
 	~Object();
 };

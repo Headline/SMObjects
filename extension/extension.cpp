@@ -363,7 +363,7 @@ cell_t GetArraySize(IPluginContext *pContext, const cell_t *params) // handle, k
 	}
 }
 
-cell_t GetSize(IPluginContext *pContext, const cell_t *params)
+cell_t GetMemberSize(IPluginContext *pContext, const cell_t *params)
 {
     Handle_t hndl = static_cast<Handle_t>(params[1]);
     HandleError err;
@@ -382,7 +382,7 @@ cell_t GetSize(IPluginContext *pContext, const cell_t *params)
     return obj->Size();
 }
 
-cell_t GetType(IPluginContext *pContext, const cell_t *params)
+cell_t GetMemberType(IPluginContext *pContext, const cell_t *params)
 {
     Handle_t hndl = static_cast<Handle_t>(params[1]);
     HandleError err;
@@ -399,14 +399,247 @@ cell_t GetType(IPluginContext *pContext, const cell_t *params)
     }
     
     int index = static_cast<int>(params[2]);
-    UnionType type = obj->GetType(index);
-
-    if (type == invalid)
+	
+	std::pair<std::string, T*> pair = obj->GetPair(index);
+    if (pair.second == nullptr)
     {
         return pContext->ThrowNativeError("Invalid Index: %d (maxsize: %d)", index, obj->Size());
     }
     
+	UnionType type = pair.second->type;
     return type;
+}
+
+cell_t GetMemberKey(IPluginContext *pContext, const cell_t *params)
+{
+    Handle_t hndl = static_cast<Handle_t>(params[1]);
+    HandleError err;
+    HandleSecurity sec;
+    
+    sec.pOwner = NULL;
+    sec.pIdentity = myself->GetIdentity();
+    
+    
+    Object* obj;
+    if ((err = g_pHandleSys->ReadHandle(hndl, g_ObjectType, &sec, (void **)&obj)) != HandleError_None)
+    {
+        return pContext->ThrowNativeError("Invalid object handle %x (error %d)", hndl, err);
+    }
+	
+	int index = static_cast<int>(params[2]);
+	std::pair<std::string, T*> pair = obj->GetPair(index);
+	
+	if (pair.second == nullptr) // not found
+	{
+		return pContext->ThrowNativeError("Invalid Index: %d (maxsize: %d)", index, obj->Size());
+	}
+
+	char* buffer;
+	pContext->LocalToString(params[3], &buffer);
+	size_t size = static_cast<size_t>(params[4]);
+
+	snprintf(buffer, size, pair.first.c_str());
+	return true;
+}
+
+cell_t GetMemberInt(IPluginContext *pContext, const cell_t *params)
+{
+    Handle_t hndl = static_cast<Handle_t>(params[1]);
+    HandleError err;
+    HandleSecurity sec;
+    
+    sec.pOwner = NULL;
+    sec.pIdentity = myself->GetIdentity();
+    
+    
+    Object* obj;
+    if ((err = g_pHandleSys->ReadHandle(hndl, g_ObjectType, &sec, (void **)&obj)) != HandleError_None)
+    {
+        return pContext->ThrowNativeError("Invalid object handle %x (error %d)", hndl, err);
+    }
+	
+	int index = static_cast<int>(params[2]);
+	std::pair<std::string, T*> pair = obj->GetPair(index);
+	
+	if (pair.second == nullptr) // not found
+	{
+		return pContext->ThrowNativeError("Invalid Index: %d (maxsize: %d)", index, obj->Size());
+	}
+	
+	if (pair.second->type != integer) // inconsistent types
+	{
+		return pContext->ThrowNativeError("Inconsistent types");
+	}
+
+    return pair.second->i;
+}
+
+cell_t GetMemberFloat(IPluginContext *pContext, const cell_t *params)
+{
+    Handle_t hndl = static_cast<Handle_t>(params[1]);
+    HandleError err;
+    HandleSecurity sec;
+    
+    sec.pOwner = NULL;
+    sec.pIdentity = myself->GetIdentity();
+    
+    
+    Object* obj;
+    if ((err = g_pHandleSys->ReadHandle(hndl, g_ObjectType, &sec, (void **)&obj)) != HandleError_None)
+    {
+        return pContext->ThrowNativeError("Invalid object handle %x (error %d)", hndl, err);
+    }
+	
+	int index = static_cast<int>(params[2]);
+	std::pair<std::string, T*> pair = obj->GetPair(index);
+	
+	if (pair.second == nullptr) // not found
+	{
+		return pContext->ThrowNativeError("Invalid Index: %d (maxsize: %d)", index, obj->Size());
+	}
+	
+	if (pair.second->type != floatingPoint) // inconsistent types
+	{
+		return pContext->ThrowNativeError("Inconsistent types");
+	}
+
+    return sp_ftoc(pair.second->f);
+}
+
+cell_t GetMemberBool(IPluginContext *pContext, const cell_t *params)
+{
+    Handle_t hndl = static_cast<Handle_t>(params[1]);
+    HandleError err;
+    HandleSecurity sec;
+    
+    sec.pOwner = NULL;
+    sec.pIdentity = myself->GetIdentity();
+    
+    
+    Object* obj;
+    if ((err = g_pHandleSys->ReadHandle(hndl, g_ObjectType, &sec, (void **)&obj)) != HandleError_None)
+    {
+        return pContext->ThrowNativeError("Invalid object handle %x (error %d)", hndl, err);
+    }
+	
+	int index = static_cast<int>(params[2]);
+	std::pair<std::string, T*> pair = obj->GetPair(index);
+	
+	if (pair.second == nullptr) // not found
+	{
+		return pContext->ThrowNativeError("Invalid Index: %d (maxsize: %d)", index, obj->Size());
+	}
+	
+	if (pair.second->type != boolean) // inconsistent types
+	{
+		return pContext->ThrowNativeError("Inconsistent types");
+	}
+
+    return pair.second->b;
+}
+
+cell_t GetMemberString(IPluginContext *pContext, const cell_t *params)
+{
+    Handle_t hndl = static_cast<Handle_t>(params[1]);
+    HandleError err;
+    HandleSecurity sec;
+    
+    sec.pOwner = NULL;
+    sec.pIdentity = myself->GetIdentity();
+    
+    
+    Object* obj;
+    if ((err = g_pHandleSys->ReadHandle(hndl, g_ObjectType, &sec, (void **)&obj)) != HandleError_None)
+    {
+        return pContext->ThrowNativeError("Invalid object handle %x (error %d)", hndl, err);
+    }
+	
+	int index = static_cast<int>(params[2]);
+	std::pair<std::string, T*> pair = obj->GetPair(index);
+	
+	if (pair.second == nullptr) // not found
+	{
+		return pContext->ThrowNativeError("Invalid Index: %d (maxsize: %d)", index, obj->Size());
+	}
+	
+	if (pair.second->type != pChar) // inconsistent types
+	{
+		return pContext->ThrowNativeError("Inconsistent types");
+	}
+
+	char* buffer;
+	pContext->LocalToString(params[3], &buffer);
+	size_t size = static_cast<size_t>(params[4]);
+
+	snprintf(buffer, size, pair.second->p);
+}
+
+cell_t GetMemberArray(IPluginContext *pContext, const cell_t *params)
+{
+    Handle_t hndl = static_cast<Handle_t>(params[1]);
+    HandleError err;
+    HandleSecurity sec;
+    
+    sec.pOwner = NULL;
+    sec.pIdentity = myself->GetIdentity();
+    
+    
+    Object* obj;
+    if ((err = g_pHandleSys->ReadHandle(hndl, g_ObjectType, &sec, (void **)&obj)) != HandleError_None)
+    {
+        return pContext->ThrowNativeError("Invalid object handle %x (error %d)", hndl, err);
+    }
+	
+	int index = static_cast<int>(params[2]);
+	std::pair<std::string, T*> pair = obj->GetPair(index);
+	
+	if (pair.second == nullptr) // not found
+	{
+		return pContext->ThrowNativeError("Invalid Index: %d (maxsize: %d)", index, obj->Size());
+	}
+	
+	if (pair.second->type != cellArray) // inconsistent types
+	{
+		return pContext->ThrowNativeError("Inconsistent types");
+	}
+
+	cell_t* addr;
+	pContext->LocalToPhysAddr(params[3], &addr);
+	size_t size = static_cast<size_t>(params[4]);
+
+	memcpy(addr, pair.second->array, sizeof(cell_t) * size);
+}
+
+cell_t GetMemberArraySize(IPluginContext *pContext, const cell_t *params)
+{
+    Handle_t hndl = static_cast<Handle_t>(params[1]);
+    HandleError err;
+    HandleSecurity sec;
+    
+    sec.pOwner = NULL;
+    sec.pIdentity = myself->GetIdentity();
+    
+    
+    Object* obj;
+    if ((err = g_pHandleSys->ReadHandle(hndl, g_ObjectType, &sec, (void **)&obj)) != HandleError_None)
+    {
+        return pContext->ThrowNativeError("Invalid object handle %x (error %d)", hndl, err);
+    }
+	
+	int index = static_cast<int>(params[2]);
+	std::pair<std::string, T*> pair = obj->GetPair(index);
+	
+	if (pair.second == nullptr) // not found
+	{
+		return pContext->ThrowNativeError("Invalid Index: %d (maxsize: %d)", index, obj->Size());
+	}
+	
+	if (pair.second->type != cellArray) // inconsistent types
+	{
+		return pContext->ThrowNativeError("Inconsistent types");
+	}
+
+	return pair.second->array->size;
 }
 
 cell_t CreateObject(IPluginContext *pContext, const cell_t *params)
@@ -443,8 +676,17 @@ const sp_nativeinfo_t MyNatives[] =
 	{"Object.GetArray",         GetArray},
 	{"Object.SetArray",         SetArray},
 	{"Object.GetArraySize",     GetArraySize},
-    {"Object.MemberCount.get",  GetSize},
-    {"Object.GetType",          GetType},
+	
+	// iteration stuff
+	{"Object.MemberCount.get",		GetMemberSize},
+    {"Object.GetMemberType",		GetMemberType},
+	{"Object.GetMemberKey",			GetMemberKey},
+    {"Object.GetMemberInt",			GetMemberInt},
+    {"Object.GetMemberFloat",		GetMemberFloat},
+    {"Object.GetMemberBool",		GetMemberBool},
+    {"Object.GetMemberString",		GetMemberString},
+    {"Object.GetMemberArray",		GetMemberArray},
+    {"Object.GetMemberArraySize",	GetMemberArraySize},
 	{NULL,                      NULL},
 };
 

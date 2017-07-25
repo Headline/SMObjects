@@ -1,7 +1,7 @@
 #include "Object.h"
 #include <string.h>
 
-UnionType Object::GetType(int index)
+std::pair<std::string, T*> Object::GetPair(int index)
 {
     ObjectMap::iterator it;
     int count = 0;
@@ -9,11 +9,13 @@ UnionType Object::GetType(int index)
     {
         if (count == index)
         {
-            return it->second->type;
+            return std::make_pair(it->first, it->second);
         }
+		
+		count++;
     }
     
-    return invalid;
+    return std::make_pair("", nullptr);
 }
 
 void Object::SetBool(std::string std, bool value)

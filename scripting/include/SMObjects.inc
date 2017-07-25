@@ -154,7 +154,19 @@ methodmap Object < Handle
 		public native get();
 	}
 
-	public native ObjectType GetType(int index);
+	public native ObjectType GetMemberType(int index);
+	
+	public native int GetMemberKey(int index, char[] buffer, int maxlen);
+	
+	public native int GetMemberInt(int index);
+	
+	public native float GetMemberFloat(int index);
+	public native bool GetMemberBool(int index);
+
+	public native void GetMemberString(int index, char[] buffer, int maxlen);
+	
+	public native void GetMemberArray(int index, any[] buffer, int maxlen);
+	public native int GetMemberArraySize(int index);
 
 };
 
