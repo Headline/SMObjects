@@ -133,6 +133,18 @@ methodmap Object < Handle
 	 * @return       	buffer size
 	 */
 	public native int GetArraySize(char[] key);
+
+
+	/**
+	 * Grabs the amount of members in the object
+	 *
+	 * @return int   	Size
+	 */
+	property int Size
+	{
+		public native get();
+	}
+
 };
 
 public Extension __ext_objects = 

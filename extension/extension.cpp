@@ -363,6 +363,25 @@ cell_t GetArraySize(IPluginContext *pContext, const cell_t *params) // handle, k
 	}
 }
 
+cell_t GetSize(IPluginContext *pContext, const cell_t *params)
+{
+    Handle_t hndl = static_cast<Handle_t>(params[1]);
+    HandleError err;
+    HandleSecurity sec;
+    
+    sec.pOwner = NULL;
+    sec.pIdentity = myself->GetIdentity();
+    
+    
+    Object* obj;
+    if ((err = g_pHandleSys->ReadHandle(hndl, g_ObjectType, &sec, (void **)&obj)) != HandleError_None)
+    {
+        return pContext->ThrowNativeError("Invalid object handle %x (error %d)", hndl, err);
+    }
+    
+    return obj->size();
+}
+
 cell_t CreateObject(IPluginContext *pContext, const cell_t *params)
 {
 	Object* obj = new Object();
@@ -385,20 +404,20 @@ cell_t CreateObject(IPluginContext *pContext, const cell_t *params)
 
 const sp_nativeinfo_t MyNatives[] = 
 {
-	{"Object.Object",	CreateObject},
-	{"Object.SetInt",	SetInt},
-	{"Object.GetInt",	GetInt},
-	{"Object.SetBool",	SetBool},
-	{"Object.GetBool",	GetBool},
-	{"Object.SetFloat",	SetFloat},
-	{"Object.GetFloat",	GetFloat},
-	{"Object.GetString",	GetString},
-	{"Object.SetString",	SetString},
-	{"Object.GetArray",	GetArray},
-	{"Object.SetArray",	SetArray},
-	{"Object.GetArraySize",	GetArraySize},
-
-	{NULL,			NULL},
+	{"Object.Object",           CreateObject},
+	{"Object.SetInt",           SetInt},
+	{"Object.GetInt",           GetInt},
+	{"Object.SetBool",          SetBool},
+	{"Object.GetBool",          GetBool},
+	{"Object.SetFloat",         SetFloat},
+	{"Object.GetFloat",         GetFloat},
+	{"Object.GetString",        GetString},
+	{"Object.SetString",        SetString},
+	{"Object.GetArray",         GetArray},
+	{"Object.SetArray",         SetArray},
+	{"Object.GetArraySize",     GetArraySize},
+    {"Object.MemberCount.get",  GetSize},
+	{NULL,                      NULL},
 };
 
 void Objects::SDK_OnAllLoaded()
