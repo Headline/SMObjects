@@ -12,6 +12,8 @@ UnionType Object::GetType(int index)
             return it->second->type;
         }
     }
+    
+    return invalid;
 }
 
 void Object::SetBool(std::string std, bool value)

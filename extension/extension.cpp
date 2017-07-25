@@ -398,7 +398,15 @@ cell_t GetType(IPluginContext *pContext, const cell_t *params)
         return pContext->ThrowNativeError("Invalid object handle %x (error %d)", hndl, err);
     }
     
-    return obj->GetType(static_cast<int>(params[2]));
+    int index = static_cast<int>(params[2]);
+    UnionType type = obj->GetType(index);
+
+    if (type == invalid)
+    {
+        return pContext->ThrowNativeError("Invalid Index: %d (maxsize: %d)", index, obj->Size());
+    }
+    
+    return type;
 }
 
 cell_t CreateObject(IPluginContext *pContext, const cell_t *params)

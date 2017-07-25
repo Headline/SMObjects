@@ -6,7 +6,8 @@
 
 enum UnionType
 {
-	boolean = 0,
+    invalid = -1,
+	boolean,
 	integer,
 	pChar,
 	floatingPoint,
