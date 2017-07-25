@@ -1,6 +1,19 @@
 #include "Object.h"
 #include <string.h>
 
+UnionType Object::GetType(int index)
+{
+    ObjectMap::iterator it;
+    int count;
+    for (it = m.begin(); it != m.end(); ++it)
+    {
+        if (count == index)
+        {
+            return it->second->type;
+        }
+    }
+}
+
 void Object::SetBool(std::string std, bool value)
 {
 	std::pair<ObjectMap::iterator, bool> ret; 

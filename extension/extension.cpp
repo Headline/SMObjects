@@ -382,6 +382,25 @@ cell_t GetSize(IPluginContext *pContext, const cell_t *params)
     return obj->Size();
 }
 
+cell_t GetType(IPluginContext *pContext, const cell_t *params)
+{
+    Handle_t hndl = static_cast<Handle_t>(params[1]);
+    HandleError err;
+    HandleSecurity sec;
+    
+    sec.pOwner = NULL;
+    sec.pIdentity = myself->GetIdentity();
+    
+    
+    Object* obj;
+    if ((err = g_pHandleSys->ReadHandle(hndl, g_ObjectType, &sec, (void **)&obj)) != HandleError_None)
+    {
+        return pContext->ThrowNativeError("Invalid object handle %x (error %d)", hndl, err);
+    }
+    
+    return obj->GetType(static_cast<int>(params[2]));
+}
+
 cell_t CreateObject(IPluginContext *pContext, const cell_t *params)
 {
 	Object* obj = new Object();
@@ -417,6 +436,7 @@ const sp_nativeinfo_t MyNatives[] =
 	{"Object.SetArray",         SetArray},
 	{"Object.GetArraySize",     GetArraySize},
     {"Object.MemberCount.get",  GetSize},
+    {"Object.GetType",          GetType},
 	{NULL,                      NULL},
 };
 

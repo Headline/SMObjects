@@ -6,7 +6,7 @@
 
 enum UnionType
 {
-	boolean,
+	boolean = 0,
 	integer,
 	pChar,
 	floatingPoint,
@@ -67,5 +67,6 @@ public:
 
     int Size();
     
+    UnionType GetType(int);
 	~Object();
 };

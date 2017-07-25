@@ -4,6 +4,15 @@
 #endif
 #define SMObjects_included
 
+enum ObjectType
+{
+	Type_Boolean = 0,
+	Type_Integer,
+	Type_String,
+	Type_Float,
+	Type_CellArray
+};
+
 methodmap Object < Handle
 {
 	/**
@@ -144,6 +153,8 @@ methodmap Object < Handle
 	{
 		public native get();
 	}
+
+	public native ObjectType GetType(int index);
 
 };
 
