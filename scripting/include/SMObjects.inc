@@ -260,13 +260,21 @@ methodmap Object < Handle
 	 */
 	public KeyValues ToKeyValues()
 	{
-		KeyValues kv = new KeyValues("SMObject");
+		// Create new KV key
+		char keyName[16];
+		if (this.HasName)
+		{
+			this.GetName(keyName, sizeof(keyName));
+		}
+		else
+		{
+			keyName = "SMObject";
+		}
+
+		KeyValues kv = new KeyValues(keyName);
 		
 		for (int i = 0; i < this.MemberCount; i++)
 		{
-			// Create new KV key
-			char keyName[16];
-			IntToString(i, keyName, sizeof(keyName));
 			
 			// Get Current SMObject key
 			char key[32];
