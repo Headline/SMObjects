@@ -225,6 +225,33 @@ methodmap Object < Handle
 	public native int GetMemberArraySize(int index);
 	
 	/**
+	 * Determines if the object has a name set.
+	 *
+	 * @return bool		true if has name
+	 */
+	property bool HasName
+	{
+		public native get();
+	}
+	
+	/**
+	 * Gets the name of an object
+	 *
+	 * @param char[]	buffer to write to
+	 * @param int		max length
+	 * @return void	
+	 */
+	public native void GetName(char[] buffer, int maxlen);
+	
+	/**
+	 * Sets the name of an object
+	 *
+	 * @param char[]	string to save
+	 * @return void	
+	 */
+	public native void SetName(char[] buffer);
+	
+	/**
 	 * Converts an SMObject type into a KeyValues structure.
 	 *
 	 * Creates a new handle that must be closed.

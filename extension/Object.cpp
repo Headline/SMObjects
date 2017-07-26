@@ -148,6 +148,21 @@ void Object::SetString(std::string std, char* value)
 	}
 }
 
+char* Object::GetName()
+{
+	return name;
+}
+
+void Object::SetName(char* input)
+{
+	if (name != nullptr)
+	{
+		free(name);
+	}
+
+	name = strdup(input);
+}
+
 char* Object::GetString(std::string std, bool &didFail)
 {
 	T* value = m.find(std)->second;

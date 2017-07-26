@@ -16,6 +16,76 @@ public:
 
 ObjectTypeHandler g_ObjectTypeHandler;
 
+
+cell_t GetObjectName(IPluginContext *pContext, const cell_t *params)
+{
+	Handle_t hndl = static_cast<Handle_t>(params[1]);
+	HandleError err;
+	HandleSecurity sec;
+ 
+	sec.pOwner = NULL;
+	sec.pIdentity = myself->GetIdentity();
+ 
+
+	Object* obj;
+	if ((err = g_pHandleSys->ReadHandle(hndl, g_ObjectType, &sec, (void **)&obj)) != HandleError_None)
+	{
+		return pContext->ThrowNativeError("Invalid object handle %x (error %d)", hndl, err);
+	}
+ 
+	char* key;
+	pContext->LocalToString(params[2], &key);
+
+	obj->SetName(key);
+	return 0;
+}
+
+cell_t SetObjectName(IPluginContext *pContext, const cell_t *params)
+{
+	Handle_t hndl = static_cast<Handle_t>(params[1]);
+	HandleError err;
+	HandleSecurity sec;
+ 
+	sec.pOwner = NULL;
+	sec.pIdentity = myself->GetIdentity();
+ 
+
+	Object* obj;
+	if ((err = g_pHandleSys->ReadHandle(hndl, g_ObjectType, &sec, (void **)&obj)) != HandleError_None)
+	{
+		return pContext->ThrowNativeError("Invalid object handle %x (error %d)", hndl, err);
+	}
+ 	
+	char* buffer;
+	pContext->LocalToString(params[2], &buffer);
+	size_t size = static_cast<size_t>(params[3]);
+
+	snprintf(buffer, size, obj->GetName());
+
+	return 0;
+}
+
+cell_t HasName(IPluginContext *pContext, const cell_t *params)
+{
+	Handle_t hndl = static_cast<Handle_t>(params[1]);
+	HandleError err;
+	HandleSecurity sec;
+ 
+	sec.pOwner = NULL;
+	sec.pIdentity = myself->GetIdentity();
+ 
+
+	Object* obj;
+	if ((err = g_pHandleSys->ReadHandle(hndl, g_ObjectType, &sec, (void **)&obj)) != HandleError_None)
+	{
+		return pContext->ThrowNativeError("Invalid object handle %x (error %d)", hndl, err);
+	}
+ 	
+	char* ptr = obj->GetName();
+	
+	return (ptr != nullptr);
+}
+
 cell_t SetInt(IPluginContext *pContext, const cell_t *params)
 {
 	Handle_t hndl = static_cast<Handle_t>(params[1]);
@@ -572,6 +642,8 @@ cell_t GetMemberString(IPluginContext *pContext, const cell_t *params)
 	size_t size = static_cast<size_t>(params[4]);
 
 	snprintf(buffer, size, pair.second->p);
+	
+	return 1;
 }
 
 cell_t GetMemberArray(IPluginContext *pContext, const cell_t *params)
@@ -608,6 +680,8 @@ cell_t GetMemberArray(IPluginContext *pContext, const cell_t *params)
 	size_t size = static_cast<size_t>(params[4]);
 
 	memcpy(addr, pair.second->array, sizeof(cell_t) * size);
+	
+	return 1;
 }
 
 cell_t GetMemberArraySize(IPluginContext *pContext, const cell_t *params)
@@ -676,7 +750,10 @@ const sp_nativeinfo_t MyNatives[] =
 	{"Object.GetArray",         GetArray},
 	{"Object.SetArray",         SetArray},
 	{"Object.GetArraySize",     GetArraySize},
-	
+    {"Object.GetName",			GetObjectName},
+    {"Object.SetName",			SetObjectName},
+    {"Object.HasName.get",		HasName},
+
 	// iteration stuff
 	{"Object.MemberCount.get",		GetMemberSize},
     {"Object.GetMemberType",		GetMemberType},

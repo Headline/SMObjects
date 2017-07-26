@@ -49,8 +49,12 @@ class Object
 {
 private:
 	ObjectMap m;
+	char* name;
 
 public:
+	void SetName(char*);
+	char* GetName();
+	
 	void SetBool(std::string, bool);
 	bool GetBool(std::string, bool&);
 
