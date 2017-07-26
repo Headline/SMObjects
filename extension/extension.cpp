@@ -17,7 +17,7 @@ public:
 ObjectTypeHandler g_ObjectTypeHandler;
 
 
-cell_t GetObjectName(IPluginContext *pContext, const cell_t *params)
+cell_t SetObjectName(IPluginContext *pContext, const cell_t *params)
 {
 	Handle_t hndl = static_cast<Handle_t>(params[1]);
 	HandleError err;
@@ -40,7 +40,7 @@ cell_t GetObjectName(IPluginContext *pContext, const cell_t *params)
 	return 0;
 }
 
-cell_t SetObjectName(IPluginContext *pContext, const cell_t *params)
+cell_t GetObjectName(IPluginContext *pContext, const cell_t *params)
 {
 	Handle_t hndl = static_cast<Handle_t>(params[1]);
 	HandleError err;

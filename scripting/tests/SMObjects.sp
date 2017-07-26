@@ -12,6 +12,7 @@ public Action Command_Write(int client, int args)
 {
 	obj = new Object();
 	
+	obj.SetName("JOHN");
 	obj.SetInt("index", client);
 	obj.SetInt("timestamp", GetTime());
 	obj.SetBool("server_exec", (client == 0));
@@ -32,7 +33,9 @@ public Action Command_Read(int client, int args)
 	bool server_exec;
 	float somefloat;
 	char teststring[32];
+	char name[32];
 	
+	obj.GetName(name, sizeof(name));
 	index = obj.GetInt("index");
 	timestamp = obj.GetInt("timestamp");
 	server_exec = obj.GetBool("server_exec");
@@ -43,6 +46,7 @@ public Action Command_Read(int client, int args)
 	int[] testArray = new int[arraySize];
 	obj.GetArray("testarray", testArray, arraySize);
 
+	PrintToServer("NAME: %s", name);
 	PrintToServer("Index: %i | Timestamp: %i | Server exec %i", index, timestamp, server_exec);
 	PrintToServer("Some float: %.2f | Teststring: %s", somefloat, teststring);
 	
