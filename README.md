@@ -7,19 +7,9 @@ Psuedo-Objects in SourceMod as an Extension
 Download linux and windows binaries from the [build page](http://michaelwflaherty.com/SMObjects/)!
 
 ## Usage
+https://github.com/Headline22/SMObjects/wiki/Documentation
 
-```c
-Object obj = new Object();
 
-obj.SetInt("something", 32); 
-obj.SetCell("list", new ArrayList());
-obj.GetCell("list").Push(40);
-
-PrintToServer("Some number: %i", obj.GetInt("something"));
-
-delete obj.GetCell("list"); // free ArrayList memory
-delete object; // free Object memory
-```
 ## FAQ
 **Couldn't I just use 'X' instead?**
 
