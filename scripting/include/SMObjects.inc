@@ -28,7 +28,7 @@ methodmap Object < Handle
 	 * @param char[]	key to pull value from
 	 * @return       	integer value
 	 */
-	public native int GetInt(char[] key);
+	public native int GetInt(const char[] key);
 	
 	/**
 	 * Sets an integer for a specified key.
@@ -37,7 +37,7 @@ methodmap Object < Handle
 	 * @param int		value
 	 * @return       	true on success
 	 */
-	public native bool SetInt(char[] key, int value);
+	public native bool SetInt(const char[] key, int value);
 	
 	/**
 	 * Grabs a cell type for a specified key.
@@ -45,7 +45,7 @@ methodmap Object < Handle
 	 * @param char[]	key to pull value from
 	 * @return       	any value
 	 */
-	public any GetCell(char[] key)
+	public any GetCell(const char[] key)
 	{
 		view_as<any>(this.GetInt(key));
 	}
@@ -57,7 +57,7 @@ methodmap Object < Handle
 	 * @param any		value
 	 * @return       	true on success
 	 */
-	public bool SetCell(char[] key, any value)
+	public bool SetCell(const char[] key, any value)
 	{
 		this.SetInt(key, view_as<int>(value));
 	}
@@ -68,7 +68,7 @@ methodmap Object < Handle
 	 * @param char[]	key to pull value from
 	 * @return       	boolean value
 	 */
-	public native bool GetBool(char[] key);
+	public native bool GetBool(const char[] key);
 	
 	/**
 	 * Sets a bool for a specified key.
@@ -77,7 +77,7 @@ methodmap Object < Handle
 	 * @param bool		value
 	 * @return       	true on success
 	 */
-	public native bool SetBool(char[] key, bool value);
+	public native bool SetBool(const char[] key, bool value);
 
 	/**
 	 * Grabs a float for a specified key.
@@ -85,7 +85,7 @@ methodmap Object < Handle
 	 * @param char[]	key to pull value from
 	 * @return       	float value
 	 */
-	public native float GetFloat(char[] key);
+	public native float GetFloat(const char[] key);
 	
 	/**
 	 * Sets a float for a specified key.
@@ -94,7 +94,7 @@ methodmap Object < Handle
 	 * @param float		value
 	 * @return       	true on success
 	 */
-	public native bool SetFloat(char[] key, float value);
+	public native bool SetFloat(const char[] key, float value);
 	
 	/**
 	 * Grabs a string for a specified key.
@@ -104,7 +104,7 @@ methodmap Object < Handle
 	 * @param int		max # of bytes to write
 	 * @return       	true on success
 	 */
-	public native bool GetString(char[] key, char[] buffer, int length);
+	public native bool GetString(const char[] key, char[] buffer, int length);
 	
 	/**
 	 * Sets a string for a specified key.
@@ -113,7 +113,7 @@ methodmap Object < Handle
 	 * @param char[]	input string
 	 * @return       	true on success
 	 */
-	public native bool SetString(char[] key, char[] value);
+	public native bool SetString(const char[] key, const char[] value);
 	
 	/**
 	 * Gets an array for a specified key.
@@ -123,7 +123,7 @@ methodmap Object < Handle
 	 * @param int		max # of bytes to write
 	 * @return       	true on success
 	 */
-	public native bool GetArray(char[] key, any[] buffer, int length);
+	public native bool GetArray(const char[] key, any[] buffer, int length);
 	
 	/**
 	 * Sets an array for a specified key.
@@ -133,7 +133,7 @@ methodmap Object < Handle
 	 * @param int		max # of bytes to read
 	 * @return       	true on success
 	 */
-	public native bool SetArray(char[] key, any[] buffer, int length);
+	public native bool SetArray(const char[] key, any[] buffer, int length);
 	
 	/**
 	 * Grabs the size of a written array
@@ -141,7 +141,7 @@ methodmap Object < Handle
 	 * @param char[]	key to pull value from
 	 * @return       	buffer size
 	 */
-	public native int GetArraySize(char[] key);
+	public native int GetArraySize(const char[] key);
 
 
 	/**
@@ -170,7 +170,7 @@ methodmap Object < Handle
 	 * @param maxlen	max number of bytes to write
 	 * @return none
 	 */
-	public native int GetMemberKey(int index, char[] buffer, int maxlen);
+	public native int GetMemberKey(int index, const char[] buffer, int maxlen);
 	
 	/**
 	 * Gets the int from a member index
@@ -204,7 +204,7 @@ methodmap Object < Handle
 	 * @param maxlen	max length
 	 * @return none
 	 */
-	public native void GetMemberString(int index, char[] buffer, int maxlen);
+	public native void GetMemberString(int index, const char[] buffer, int maxlen);
 	
 	/**
 	 * Gets the any[] array from a member index
@@ -241,7 +241,7 @@ methodmap Object < Handle
 	 * @param int		max length
 	 * @return void	
 	 */
-	public native void GetName(char[] buffer, int maxlen);
+	public native void GetName(const char[] buffer, int maxlen);
 	
 	/**
 	 * Sets the name of an object
@@ -249,7 +249,7 @@ methodmap Object < Handle
 	 * @param char[]	string to save
 	 * @return void	
 	 */
-	public native void SetName(char[] buffer);
+	public native void SetName(const char[] buffer);
 	
 	/**
 	 * Converts an SMObject type into a KeyValues structure.
